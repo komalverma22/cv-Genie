@@ -1,0 +1,22 @@
+export default function Navbar() {
+  return (
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 z-10 w-[90%] max-w-5xl  px-3 py-3 rounded-sm shadow-md flex justify-between items-center my-4 border-1 border-black/30 fixed backdrop-blur-sm text">
+      {/* Logo */}
+      <div className="text-2xl font-bold">CvGenie</div>
+
+      {/* Navigation links (add here if needed) */}
+      <div className="space-x-4 hidden md:flex gap-6 text-xl ">
+       <a href="">Home</a>
+       <a href="">Features</a>
+       <a href="">Contact</a>
+      </div>
+
+      {/* Login Button */}
+      <div>
+        <button className=" text-xl bg-green-400/40 px-6 py-1 rounded-sm font-semibold  transition ">
+          Log In
+        </button>
+      </div>
+    </div>
+  );
+}
