@@ -27,6 +27,7 @@ body {
 
 :root{
   --foreground: rgba(16, 16, 16, 0.87);
+  --background-color: #ebebe5;
 
 }
 .text{
@@ -38,4 +39,37 @@ body {
 }
 body{
   color: var(--foreground);
+  background-color: var(--background-color);
 }
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.2) rotate(0deg);
+  }
+}
+
+.animate-sparkle {
+  animation: sparkle 1.5s infinite ease-in-out;
+}
+
+.mask-image-top {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 75%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 75%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+
+.mask-image-gradient {
+  -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+
