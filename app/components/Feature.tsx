@@ -53,7 +53,7 @@ export default function Features() {
         </p>
 
         {/* Feature Cards Grid */}
-        <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 gap-12 max-w-6xl w-full px-4 md:px-0 py-0 sm:py-3">
+        <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 gap-12 max-w-6xl w-full px-4 md:px-0 py-0 sm:py-10">
           {features.map((feature, index) => (
             <div
               key={index}

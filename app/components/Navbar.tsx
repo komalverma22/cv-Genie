@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export default function Navbar() {
   return (
     <div className="absolute top-0 left-1/2 -translate-x-1/2 z-10 w-[90%] max-w-5xl  px-3 py-3 rounded-sm shadow-md flex justify-between items-center my-4 border-1 border-black/30 backdrop-blur-sm fixed text">
@@ -12,8 +14,8 @@ export default function Navbar() {
 
       {/* Navigation links (add here if needed) */}
       <div className="space-x-4 hidden md:flex gap-6 text-xl ">
-       <a href="">Home</a>
-       <a href="">Features</a>
+       <Link href="/">Home</Link>
+      <Link href="/create-resume">Create</Link>
        <a href="">Contact</a>
       </div>
 

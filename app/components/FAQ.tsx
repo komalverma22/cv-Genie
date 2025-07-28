@@ -35,7 +35,7 @@ export default function FAQ() {
 
       {/* Text & Content */}
       <div className="relative z-10 pt-20 flex flex-col items-center justify-center px-4">
-        <div className="flex items-center justify-center gap-3 mt-4">
+        <div className="flex items-center justify-center gap-3 mt-4 pt-10">
           <img
             src="/sparkle.png"
             alt="sparkle"

@@ -58,8 +58,8 @@ body{
 }
 
 .mask-image-top {
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 75%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 75%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
 }
@@ -70,6 +70,15 @@ body{
   mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+}
+/* Hide scrollbar for all browsers */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 
