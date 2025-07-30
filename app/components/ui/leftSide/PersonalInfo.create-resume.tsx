@@ -14,7 +14,7 @@ export default function PersonalInfo({ info, setInfo }) {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Personal Info</h1>
+      <h1 className="text-2xl font-bold mb-4 title-font">Personal Info</h1>
 
       <div className="flex flex-wrap -mx-2">
         {inputFields.map((field) => (

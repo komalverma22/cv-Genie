@@ -13,7 +13,7 @@ export default function Navbar() {
 </div>
 
       {/* Navigation links (add here if needed) */}
-      <div className="space-x-4 hidden md:flex gap-6 text-xl ">
+      <div className="space-x-4 hidden md:flex gap-6 text-xl title-font">
        <Link href="/">Home</Link>
       <Link href="/create-resume">Create</Link>
        <a href="">Contact</a>

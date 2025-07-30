@@ -1,6 +1,6 @@
 export default function PersonalInfoRight({ info }) {
   return (
-    <div className="text-black px-6  space-y-4">
+    <div className="text-black px-6 pt-6  space-y-4">
       {/* Name & Contact */}
       <div className="text-center">
         <h1 className="text-3xl font-bold uppercase">{info.name || "Your Name"}</h1>

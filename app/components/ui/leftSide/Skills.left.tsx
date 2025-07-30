@@ -24,15 +24,28 @@ export default function SkillLeft({ skills, setSkills }: SkillLeft) {
 
   return (
     <div>
-      <h2 className="text-xl font-bold mb-3 flex items-center gap-2">
+      <h2 className=" text-2xl font-bold my-4 flex items-center justify-between title-font">
         Skills
-        <button
-          onClick={addSkillRow}
-          className="text-green-600 hover:text-green-800"
-          title="Add Skill"
-        >
-          <FaPlus />
-        </button>
+       <button
+  onClick={addSkillRow}
+  className="w-8 h-8 flex "
+  title="Add Skill"
+>
+  <video
+    src="/plus.mp4" // ⬅️ make sure this path is correct
+    className="w-full h-full object-contain"
+    muted
+    playsInline
+    onMouseEnter={(e) => {
+      e.currentTarget.currentTime = 0;
+      e.currentTarget.play();
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.pause();
+    }}
+  />
+</button>
+
       </h2>
 
       {skills.map((skill, index) => (
@@ -42,14 +55,14 @@ export default function SkillLeft({ skills, setSkills }: SkillLeft) {
             placeholder="Category (e.g. Languages)"
             value={skill.category}
             onChange={(e) => handleChange(index, "category", e.target.value)}
-            className="w-1/3 border p-2 rounded"
+            className="w-1/3 border border-gray-300 p-2 rounded"
           />
           <input
             type="text"
             placeholder="Skills (e.g. HTML, CSS)"
             value={skill.items}
             onChange={(e) => handleChange(index, "items", e.target.value)}
-            className="w-2/3 border p-2 rounded"
+            className="w-2/3 border border-gray-300 p-2 rounded"
           />
           <button
             onClick={() => removeSkillRow(index)}
