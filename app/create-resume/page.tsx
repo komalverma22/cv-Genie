@@ -7,6 +7,8 @@ import SkillRight from "../components/ui/rightSide/SkillRight";
 import SkillLeft from "../components/ui/leftSide/Skills.left";
 import EducationLeft from "../components/ui/leftSide/Education.Left";
 import EducationRight from "../components/ui/rightSide/EducationRight";
+import ExperienceLeft from "../components/ui/leftSide/Project.Left";
+import ExperienceRight from "../components/ui/rightSide/Project.Right";
 
 export default function CreateResume() {
   const [info, setInfo] = useState({
@@ -19,6 +21,11 @@ export default function CreateResume() {
   });
  const [skills, setSkills] = useState([{ category: '', items: '' }]);
  const [education,setEducation]=useState([{institute: '', degree: '', duration: '', score: ''}])
+ const[experience,setExperience]=useState([{  role: '',
+        organization: '',
+        location: '',
+        duration: '',
+        points: ['']}])
   return (
     <div className="fixed w-screen h-screen">
       {/* background-image */}
@@ -34,6 +41,7 @@ export default function CreateResume() {
             <PersonalInfo info={info} setInfo={setInfo} />
             <SkillLeft skills={skills} setSkills={setSkills}/>
             <EducationLeft education={education} setEducation={setEducation}/>
+            <ExperienceLeft experience={experience} setExperience={setExperience}/>
           </div>
 
           {/* Right: Live Preview */}
@@ -42,6 +50,7 @@ export default function CreateResume() {
             {/* <PersonalInfoRight/> */}
             <SkillRight skills={skills}/>
             <EducationRight education={education}/>
+            <ExperienceRight experience={experience}/>
           </div>
         </div>
       </div>
