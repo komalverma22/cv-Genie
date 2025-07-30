@@ -7,8 +7,10 @@ import SkillRight from "../components/ui/rightSide/SkillRight";
 import SkillLeft from "../components/ui/leftSide/Skills.left";
 import EducationLeft from "../components/ui/leftSide/Education.Left";
 import EducationRight from "../components/ui/rightSide/EducationRight";
-import ExperienceLeft from "../components/ui/leftSide/Project.Left";
-import ExperienceRight from "../components/ui/rightSide/Project.Right";
+import ExperienceLeft from "../components/ui/leftSide/Experience.left";
+import ExperienceRight from "../components/ui/rightSide/Experience.Right";
+import ProjectsLeft from "../components/ui/leftSide/Project.Left";
+import ProjectsRight from "../components/ui/rightSide/Project.Right";
 
 export default function CreateResume() {
   const [info, setInfo] = useState({
@@ -26,6 +28,7 @@ export default function CreateResume() {
         location: '',
         duration: '',
         points: ['']}])
+        const[projects,setProjects]=useState([{title: '', description: '', points: [''], github: '' }])
   return (
     <div className="fixed w-screen h-screen">
       {/* background-image */}
@@ -42,15 +45,17 @@ export default function CreateResume() {
             <SkillLeft skills={skills} setSkills={setSkills}/>
             <EducationLeft education={education} setEducation={setEducation}/>
             <ExperienceLeft experience={experience} setExperience={setExperience}/>
+<ProjectsLeft projects={projects} setProjects={setProjects} />
           </div>
 
           {/* Right: Live Preview */}
-          <div className="w-1/2  bg-white/90 ">
+          <div className="w-1/2 max-h-[83vh] overflow-y-auto  p-6 mr-3  border border-gray-400 shadow rounded-lg bg-white/90 scrollbar-hide  ">
             <PersonalInfoRight info={info} />
             {/* <PersonalInfoRight/> */}
             <SkillRight skills={skills}/>
             <EducationRight education={education}/>
             <ExperienceRight experience={experience}/>
+            <ProjectsRight projects={projects}/>
           </div>
         </div>
       </div>

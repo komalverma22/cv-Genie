@@ -1,60 +1,72 @@
 "use client"
-import { motion, AnimatePresence } from "framer-motion"
+import { FaTrash } from "react-icons/fa"
 import type React from "react"
 
-type Project = {
-  title: string
-  description: string
+import { motion, AnimatePresence } from "framer-motion"
+
+type Experience = {
+  role: string
+  organization: string
+  location: string
+  duration: string
   points: string[]
-  github: string
 }
 
 type Props = {
-  projects: Project[]
-  setProjects: React.Dispatch<React.SetStateAction<Project[]>>
+  experience: Experience[]
+  setExperience: React.Dispatch<React.SetStateAction<Experience[]>>
 }
 
-export default function ProjectsLeft({ projects, setProjects }: Props) {
-  const handleChange = (index: number, field: keyof Project, value: string) => {
-    const updated = [...projects]
+export default function ExperienceLeft({ experience, setExperience }: Props) {
+  const handleChange = (index: number, field: keyof Experience, value: string) => {
+    const updated = [...experience]
     updated[index][field] = value
-    setProjects(updated)
+    setExperience(updated)
   }
 
-  const handlePointChange = (projIndex: number, pointIndex: number, value: string) => {
-    const updated = [...projects]
-    updated[projIndex].points[pointIndex] = value
-    setProjects(updated)
+  const handlePointChange = (expIndex: number, pointIndex: number, value: string) => {
+    const updated = [...experience]
+    updated[expIndex].points[pointIndex] = value
+    setExperience(updated)
   }
 
-  const addProject = () => {
-    setProjects([...projects, { title: "", description: "", points: [""], github: "" }])
+  const addExperienceRow = () => {
+    setExperience([
+      ...experience,
+      {
+        role: "",
+        organization: "",
+        location: "",
+        duration: "",
+        points: [""],
+      },
+    ])
   }
 
-  const removeProject = (index: number) => {
-    setProjects(projects.filter((_, i) => i !== index))
+  const removeExperienceRow = (index: number) => {
+    setExperience(experience.filter((_, i) => i !== index))
   }
 
   const addPoint = (index: number) => {
-    const updated = [...projects]
+    const updated = [...experience]
     updated[index].points.push("")
-    setProjects(updated)
+    setExperience(updated)
   }
 
-  const removePoint = (projIndex: number, pointIndex: number) => {
-    const updated = [...projects]
-    updated[projIndex].points.splice(pointIndex, 1)
-    setProjects(updated)
+  const removePoint = (expIndex: number, pointIndex: number) => {
+    const updated = [...experience]
+    updated[expIndex].points.splice(pointIndex, 1)
+    setExperience(updated)
   }
 
   return (
     <div>
       <h2 className="text-2xl font-bold my-4 flex items-center justify-between title-font">
-        Projects
+        Work Experience
         <motion.button
-          onClick={addProject}
+          onClick={addExperienceRow}
           className="w-8 h-8 flex"
-          title="Add Project"
+          title="Add Experience"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -75,7 +87,7 @@ export default function ProjectsLeft({ projects, setProjects }: Props) {
       </h2>
 
       <AnimatePresence mode="popLayout">
-        {projects.map((proj, index) => (
+        {experience.map((exp, index) => (
           <motion.div
             key={index}
             layout
@@ -94,9 +106,8 @@ export default function ProjectsLeft({ projects, setProjects }: Props) {
             }}
             className="border border-gray-300 p-4 rounded mb-3 relative hover:shadow-md transition-shadow duration-200"
           >
-            {/* 🗑️ Delete Button */}
             <motion.button
-              onClick={() => removeProject(index)}
+              onClick={() => removeExperienceRow(index)}
               className="absolute top-2 right-2 p-1 rounded-full hover:bg-red-50 transition-colors duration-200 group"
               title="Remove"
               whileHover={{ scale: 1.15 }}
@@ -105,7 +116,7 @@ export default function ProjectsLeft({ projects, setProjects }: Props) {
               <motion.img
                 src="/trash-can.png"
                 alt="Remove"
-                className="w-6 h-6 object-contain"
+                className="w-6 h-6 object-contain "
                 whileHover={{
                   rotate: [0, -15, 15, -10, 10, -5, 5, 0],
                   scale: 1.1,
@@ -119,50 +130,75 @@ export default function ProjectsLeft({ projects, setProjects }: Props) {
               />
             </motion.button>
 
-            {/* Title */}
             <motion.div
               className="mb-3"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
             >
-              <label className="block font-medium mb-1">Project Title</label>
+              <label className="block font-medium mb-1">Role</label>
               <input
                 type="text"
-                placeholder="e.g. BookReader"
-                value={proj.title}
-                onChange={(e) => handleChange(index, "title", e.target.value)}
+                placeholder="e.g. Junior Web Developer Intern"
+                value={exp.role}
+                onChange={(e) => handleChange(index, "role", e.target.value)}
                 className="w-full border border-gray-300 p-2 rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200"
               />
             </motion.div>
 
-            {/* Description */}
             <motion.div
-              className="mb-3"
+              className="flex gap-4 mb-3"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <label className="block font-medium mb-1">Description</label>
-              <textarea
-                placeholder="e.g. A full-stack app where users explore books by genre, bookmark, comment..."
-                value={proj.description}
-                onChange={(e) => handleChange(index, "description", e.target.value)}
-                className="w-full border border-gray-300 p-2 rounded resize-y focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200"
-                rows={3}
-              />
+              <div className="w-1/2">
+                <label className="block font-medium mb-1">Organization</label>
+                <input
+                  type="text"
+                  placeholder="e.g. TBI"
+                  value={exp.organization}
+                  onChange={(e) => handleChange(index, "organization", e.target.value)}
+                  className="w-full border border-gray-300 p-2 rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200"
+                />
+              </div>
+              <div className="w-1/2">
+                <label className="block font-medium mb-1">Location</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Dehradun"
+                  value={exp.location}
+                  onChange={(e) => handleChange(index, "location", e.target.value)}
+                  className="w-full border border-gray-300 p-2 rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200"
+                />
+              </div>
             </motion.div>
 
-            {/* Points */}
             <motion.div
               className="mb-3"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <label className="block font-medium mb-1">Key Features / Tech</label>
+              <label className="block font-medium mb-1">Duration</label>
+              <input
+                type="text"
+                placeholder="e.g. Feb 2025 – April 2025"
+                value={exp.duration}
+                onChange={(e) => handleChange(index, "duration", e.target.value)}
+                className="w-full border border-gray-300 p-2 rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200"
+              />
+            </motion.div>
+
+            <motion.div
+              className="mb-2"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <label className="block font-medium mb-1">Responsibilities</label>
               <AnimatePresence>
-                {proj.points.map((point, pIndex) => (
+                {exp.points.map((point, pIndex) => (
                   <motion.div
                     key={pIndex}
                     className="flex items-start gap-2 mb-2"
@@ -173,32 +209,26 @@ export default function ProjectsLeft({ projects, setProjects }: Props) {
                   >
                     <textarea
                       value={point}
-                      placeholder="Describe feature or tech used"
+                      placeholder="Describe your work here..."
                       onChange={(e) => handlePointChange(index, pIndex, e.target.value)}
                       className="w-full border border-gray-300 p-2 rounded resize-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200"
-                      rows={1}
                     />
-                    <motion.button
-                      onClick={() => removePoint(index, pIndex)}
-                      className="mt-1 p-1 rounded hover:bg-red-50 transition-colors duration-200"
-                      title="Remove Point"
-                      whileHover={{ scale: 1.2, rotate: 10 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <motion.img
-                        src="/trash-can.png"
-                        alt="Remove Point"
-                        className="w-4 h-4 object-contain"
-                        whileHover={{
-                          rotate: [0, -10, 10, -5, 5, 0],
-                          transition: {
-                            duration: 0.4,
-                            ease: "easeInOut",
-                          },
-                        }}
-                     
-                      />
-                    </motion.button>
+              
+
+<motion.button
+  onClick={() => removePoint(index, pIndex)}
+  className="text-red-600 hover:text-red-800 mt-1 p-1 rounded hover:bg-red-50 transition-colors duration-200"
+  title="Remove Point"
+  whileHover={{ scale: 1.2, rotate: 10 }}
+  whileTap={{ scale: 0.9 }}
+>
+  <img
+    src="/trash-can.png"
+    alt="Delete"
+    className="w-6 h-6 object-contain"
+  />
+</motion.button>
+
                   </motion.div>
                 ))}
               </AnimatePresence>
@@ -211,27 +241,9 @@ export default function ProjectsLeft({ projects, setProjects }: Props) {
                 + Add Point
               </motion.button>
             </motion.div>
-
-            {/* GitHub Link */}
-            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
-              <label className="block font-medium mb-1">GitHub Link</label>
-              <input
-                type="text"
-                placeholder="e.g. https://github.com/username/project-name"
-                value={proj.github}
-                onChange={(e) => handleChange(index, "github", e.target.value)}
-                className="w-full border border-gray-300 p-2 rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200"
-              />
-            </motion.div>
           </motion.div>
         ))}
       </AnimatePresence>
-
-      {projects.length === 0 && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-8 text-gray-500">
-          <p>No projects added yet. Click the + button to add your first project!</p>
-        </motion.div>
-      )}
     </div>
   )
 }
