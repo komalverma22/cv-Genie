@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import PersonalInfo from "../components/ui/leftSide/PersonalInfo.create-resume";
 import PersonalInfoRight from "../components/ui/rightSide/PersonalInfo.Right";
 import SkillRight from "../components/ui/rightSide/SkillRight";

@@ -5,6 +5,7 @@ import LandingPage from './components/LandingPage';
 import TextGenerate from './components/TextGenerate';
 import Features from './components/Feature';
 import FAQ from './components/FAQ';
+import FooterThird from './components/Footer';
 export default function Home() {
   return (
     <div>
@@ -33,6 +34,9 @@ export default function Home() {
      </div>
      <div>
       <FAQ/>
+     </div>
+     <div>
+      <FooterThird/>
      </div>
   </div>
   );

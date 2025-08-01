@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import FooterThird from "./Footer";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -26,7 +27,7 @@ export default function FAQ() {
   ];
 
   return (
-    <div className="relative h-[1000px] overflow-hidden mask-image-top">
+    <div className="relative h-[830px] sm:h-[800px] overflow-hidden mask-image-top">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover opacity-50 backdrop-blur-sm"
@@ -39,15 +40,15 @@ export default function FAQ() {
           <img
             src="/sparkle.png"
             alt="sparkle"
-            className="w-8 h-8 object-contain animate-sparkle text-extrabold"
+            className="w-6 sm:w-8 h-6 sm:h-8 object-contain animate-sparkle text-extrabold"
           />
-          <h2 className="text-6xl font-bold text-black drop-shadow-md">
+          <h2 className=" text-4xl sm:text-6xl font-bold text-black drop-shadow-md">
             Still Confused?
           </h2>
           <img
             src="/sparkle.png"
             alt="sparkle"
-            className="w-8 h-8 object-contain animate-sparkle text-extrabold mt-2"
+            className="w-6 sm:w-8 h-6 sm:h-8 object-contain animate-sparkle text-extrabold mt-2"
           />
         </div>
 
@@ -91,6 +92,7 @@ export default function FAQ() {
     />
     Get Help
   </button>
+  
 </div>
 
 
