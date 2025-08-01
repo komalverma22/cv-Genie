@@ -58,19 +58,7 @@ export default function ProjectsLeft({ projects, setProjects }: Props) {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
-          <video
-            src="/plus.mp4"
-            className="w-full h-full object-contain"
-            muted
-            playsInline
-            onMouseEnter={(e) => {
-              e.currentTarget.currentTime = 0
-              e.currentTarget.play()
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.pause()
-            }}
-          />
+          <img src="/plus.png" alt="add" className="w-6 h-6 object-contain items-center" />
         </motion.button>
       </h2>
 
@@ -97,7 +85,7 @@ export default function ProjectsLeft({ projects, setProjects }: Props) {
             {/* 🗑️ Delete Button */}
             <motion.button
               onClick={() => removeProject(index)}
-              className="absolute top-2 right-2 p-1 rounded-full hover:bg-red-50 transition-colors duration-200 group"
+              className="absolute top-2 right-2 px-0 py-1 rounded-full hover:bg-red-50 transition-colors duration-200 group"
               title="Remove"
               whileHover={{ scale: 1.15 }}
               whileTap={{ scale: 0.9 }}

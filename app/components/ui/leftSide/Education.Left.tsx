@@ -40,19 +40,7 @@ export default function EducationLeft({ education, setEducation }: Props) {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
-          <video
-            src="/plus.mp4"
-            className="w-full h-full object-contain"
-            muted
-            playsInline
-            onMouseEnter={(e) => {
-              e.currentTarget.currentTime = 0
-              e.currentTarget.play()
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.pause()
-            }}
-          />
+         <img src="/plus.png" alt="add" className="w-6 h-6 object-contain items-center" />
         </motion.button>
       </h2>
 
