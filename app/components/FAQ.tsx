@@ -84,15 +84,26 @@ export default function FAQ() {
         </div>
         {/* Get Help Button */}
 <div className="mt-10 flex justify-center">
-  <button className="flex items-center gap-1 text-black/80 px-6 py-2 rounded-sm shadow-md hover:shadow-xl transition-all duration-300 font-semibold text-lg hover:scale-105 bg-white/70 backdrop-blur-md">
+  <button className="flex animated-hover-btn items-center gap-1 text-black/80 px-6 py-2 rounded-sm shadow-md hover:shadow-xl transition-all duration-300 font-semibold text-lg hover:scale-105 bg-white/70 backdrop-blur-md bubbles-effect relative">
     <img
       src="/problem-solving.png"
       alt="Problem Solving"
       className="w-6 h-6 object-contain"
     />
+    <div className="hover-left absolute w-full h-full top-0 right-2/3"></div>
     Get Help
+    <div className="hover-right absolute w-full h-full top-0 left-2/3"></div>
+          <div className="bubbles-effect absolute inset-0 opacity-60 pointer-events-none"></div>
   </button>
-  
+    {/* <button 
+          className="animated-hover-btn bg-green-600 text-white px-6 py-3 rounded font-bold text-lg relative overflow-hidden shadow-lg"
+          
+        >
+          <div className="hover-left absolute w-full h-full top-0 right-2/3"></div>
+          Get Help
+          <div className="hover-right absolute w-full h-full top-0 left-2/3"></div>
+          <div className="bubbles-effect absolute inset-0 opacity-60 pointer-events-none"></div>
+        </button> */}
 </div>
 
 

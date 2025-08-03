@@ -26,8 +26,8 @@ export default function LandingPage() {
           dream job — and it is Free to download
         </p>
         <div className="flex justify-center items-center">
-          <button className="border border-black/30 px-4 py-2.5 my-3 text-xl font-semibold bg-green-400/30 flex items-center gap-2 rounded-sm">
-            Create Your Resume
+          <button className="border animated-hover-btn transition-all duration-300 border-black/30 px-4 py-2.5 my-3 text-xl bubbles-effect relative font-semibold bg-green-400/30 flex items-center gap-2 rounded-sm">
+            <a href="/create-resume">Create Your Resume</a>
             <img
               src="/sparkle.png"
               alt="sparkle"
