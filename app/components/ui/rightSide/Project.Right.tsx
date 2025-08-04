@@ -16,13 +16,12 @@ export default function ProjectsRight({ projects }: Props) {
   if (!projects?.length) return null;
 
   return (
-    <div className="text-black px-6 my-3">
-      <h2 className="font-semibold border-b border-gray-400 mb-1 text-base">
-        PROJECTS
-      </h2>
+    <div className=" px-6 ">
+       <h2 className="font-semibold border-b var[--border] pb-2  text-base leading-relaxed
+"  style={{ borderBottom: "var(--border)" }}>PROJECTS</h2>
 
       {projects.map((proj, index) => (
-        <div key={index} className="mb-4">
+        <div key={index} className="">
           {/* Project Title */}
           <p className="font-semibold">{proj.title || 'Project Title'}</p>
 
@@ -32,10 +31,10 @@ export default function ProjectsRight({ projects }: Props) {
           </p>
 
           {/* Features / Tech */}
-          <ul className="list-disc list-inside text-sm space-y-1">
+          <ul className=" text-sm space-y-1">
             {(proj.points.length ? proj.points : ['Feature / Tech used...']).map(
               (point, i) => (
-                <li key={i}>{point || "Enter your tech stack/other features"}</li>
+                <li key={i}   className="relative pl-3 before:content-['•'] before:absolute before:left-0 before:top-0.5 before:text-black">{point || "Enter your tech stack/other features"}</li>
               )
             )}
           </ul>
@@ -46,9 +45,9 @@ export default function ProjectsRight({ projects }: Props) {
               href={proj.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-800 hover:underline flex items-center gap-1 mt-1 text-sm"
+              className=" flex items-center gap-1 mt-1 text-sm" style={{color:"var(--link-color)"}}
             >
-              <FaLink className="text-blue-500" /> GitHub
+            <span role="img" aria-label="link">🔗</span> GitHub
             </a>
           )}
         </div>

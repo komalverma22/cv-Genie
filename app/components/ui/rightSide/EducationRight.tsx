@@ -15,13 +15,15 @@ export default function EducationRight({ education }: Props) {
   if (!education?.length) return null;
 
   return (
-    <div className="text-black px-6 my-3">
-      <h2 className="font-semibold border-b border-gray-400 mb-1 text-base">
-        EDUCATION
-      </h2>
+    <div className=" px-6 ">
+    <h2 className="font-semibold border-b var[--border] pb-2 mb-1 text-base leading-relaxed
+"  style={{ borderBottom: "var(--border)" }}>
+  EDUCATION
+</h2>
+
 
       {education.map((edu, index) => (
-        <div key={index} className="flex justify-between mb-4">
+        <div key={index} className="flex justify-between mb-1">
           {/* Left side: institute and degree */}
           <div>
             <p className="font-semibold">

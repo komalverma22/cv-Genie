@@ -8,7 +8,7 @@ import FAQ from './components/FAQ';
 import FooterThird from './components/Footer';
 export default function Home() {
   return (
-    <div>
+    <div className='overflow-x-hidden'>
     <div className="h-screen w-screen   relative">
       {/* Background Image - Fixed to viewport */}
       <Image

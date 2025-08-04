@@ -16,13 +16,12 @@ export default function ExperienceRight({ experience }: Props) {
   if (!experience?.length) return null;
 
   return (
-    <div className="text-black px-6 my-3">
-      <h2 className="font-semibold border-b border-gray-400 mb-1 text-base">
-        WORK EXPERIENCE
-      </h2>
+    <div className=" px-6 ">
+       <h2 className="font-semibold border-b var[--border] pb-2  leading-relaxed
+"  style={{ borderBottom: "var(--border)" }}>WORK EXPERIENCE</h2>
 
       {experience.map((exp, index) => (
-        <div key={index} className="mb-4">
+        <div key={index} className="">
           {/* Top Row: Role + Duration */}
           <div className="flex justify-between items-start">
             <p className="font-semibold">
@@ -41,13 +40,17 @@ export default function ExperienceRight({ experience }: Props) {
           </p>
 
           {/* Points */}
-          <ul className="list-disc list-inside text-sm space-y-1">
-            {(exp.points.length ? exp.points : ["What did you work on?"]).map(
-              (point, i) => (
-                <li key={i}>{point || "Describe your contribution..."}</li>
-              )
-            )}
-          </ul>
+       <ul className=" text-sm space-y-1">
+  {(exp.points.length ? exp.points : ["What did you work on?"]).map((point, i) => (
+    <li
+      key={i}
+      className="relative pl-3 before:content-['•'] before:absolute before:left-0 before:top-0.5 before:text-black"
+    >
+      {point || "Describe your contribution..."}
+    </li>
+  ))}
+</ul>
+
         </div>
       ))}
     </div>

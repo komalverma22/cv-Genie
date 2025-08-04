@@ -71,7 +71,7 @@ export default function SignupForm() {
     try {
       setIsLoading(true);
       const result = await signIn("google", {
-        callbackUrl: "/dashboard", // Redirect URL after successful signup
+        callbackUrl: "/", // Redirect URL after successful signup
         redirect: false,
       });
       
@@ -132,7 +132,7 @@ export default function SignupForm() {
         router.push("/signin");
       } else {
         alert("Account created successfully!");
-        router.push("/dashboard");
+        router.push("/");
       }
       
     } catch (err) {

@@ -1,12 +1,17 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 @import "tailwindcss";
 
 
 /* @custom-variant dark (&:is(.dark *)); */
 
-/* :root {
+:root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000000;
+  /* --border:gray; */
+   --border: 1.5px solid #aaaeb8ef;
+   --link-color: rgb(8, 8, 137);
 }
 
 @theme inline {
@@ -19,7 +24,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #000000;
   }
 }
 
@@ -27,7 +32,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-} */
+}
 
 :root{
   --background-color: #ebebe5;
@@ -41,6 +46,14 @@ body {
 }
 .heading-font{
     font-family: "Noto Sans JP", sans-serif;
+}
+.rowdies-light {
+  font-family: "Rowdies", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+.description-font{
+    font-family: "League Spartan", sans-serif !important;
 }
 body{
   background-color: var(--background-color);
@@ -88,3 +101,6 @@ body{
    font-family: "Playfair Display", serif;
 }
 
+.ignore-capture {
+  visibility: hidden !important;
+}

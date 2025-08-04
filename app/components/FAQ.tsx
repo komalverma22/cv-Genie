@@ -52,7 +52,8 @@ export default function FAQ() {
           />
         </div>
 
-        <p className="text-xl mt-4 text-gray-700 text-center max-w-2xl">
+        <p className="text-2xl mt-4 text-gray-700 text-center max-w-2xl description-font"
+         style={{ fontFamily: "var(--font-spartan)" }}>
           Explore the magical tools that make CVGenie the easiest way to build stunning resumes.
         </p>
 

@@ -48,7 +48,8 @@ export default function Features() {
           />
         </div>
 
-        <p className="text-xl mt-4 text-gray-700 text-center max-w-2xl">
+        <p className="text-2xl mt-4 text-gray-700 text-center max-w-2xl"
+         style={{ fontFamily: "var(--font-spartan)" }}>
           Explore the magical tools that make CVGenie the easiest way to build stunning resumes.
         </p>
 
@@ -67,7 +68,8 @@ export default function Features() {
               <h3 className="text-2xl font-semibold text-black mb-2">
                 {feature.title}
               </h3>
-              <p className="text-gray-700 text-lg">
+              <p className="text-gray-700 text-lg " 
+              style={{ fontFamily: "var(--font-spartan)" }}>
                 {feature.description}
               </p>
             </div>
