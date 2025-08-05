@@ -44,11 +44,11 @@ const handleDownloadPDF = async () => {
       backgroundColor: '#ffffff',
       useCORS: true,
       allowTaint: true,
-      scrollX: 0,
-      scrollY: 0,
-      width: element.scrollWidth,
-      height: element.scrollHeight,
-      letterRendering: true,
+      // scrollX: 0,
+      // scrollY: 0,
+      // width: element.scrollWidth,
+      // height: element.scrollHeight,
+      // letterRendering: true,
     });
 
     const canvasWidth = canvas.width;
@@ -78,7 +78,12 @@ const handleDownloadPDF = async () => {
 
 
   // ✅ Function to add links (mailto, http, etc.)
-  const addClickableLinks = async (pdf, element, pdfWidth, pdfHeight) => {
+  const addClickableLinks = (
+  pdf: jsPDF,
+  element: HTMLElement,
+  pdfWidth: number,
+  pdfHeight: number
+)=> {
     const links = element.querySelectorAll('a[href]');
     const boundingBox = element.getBoundingClientRect();
 

@@ -19,9 +19,10 @@ import AcheivementLeft from "../components/ui/leftSide/Acheivements.Left";
 import AchievementsRight from "../components/ui/rightSide/Acheivements.Right";
 
 export default function CreateResume() {
-  const [info, setInfo] = useState({
-    name: "", location: "", email: "", github: "", linkedin: "", twitter: "",
-  });
+ const [info, setInfo] = useState({
+  name: "", location: "", email: "", github: "", linkedin: "", twitter: "", summary: ""
+});
+
   const [skills, setSkills] = useState([{ category: '', items: '' }]);
   const [education, setEducation] = useState([{ institute: '', degree: '', duration: '', score: '' }]);
   const [experience, setExperience] = useState([{ role: '', organization: '', location: '', duration: '', points: [''] }]);
