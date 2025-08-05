@@ -46,8 +46,8 @@ const handleDownloadPDF = async () => {
       allowTaint: true,
       // scrollX: 0,
       // scrollY: 0,
-      // width: element.scrollWidth,
-      // height: element.scrollHeight,
+      width: element.scrollWidth,
+      height: element.scrollHeight,
       // letterRendering: true,
     });
 
