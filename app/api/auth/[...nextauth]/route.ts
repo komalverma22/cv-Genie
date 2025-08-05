@@ -32,7 +32,7 @@ const handler = NextAuth({
         if (!isValid) throw new Error("Invalid password");
 
         return {
-          id: user.id,
+          id: user.id.toString(),
           name: user.name,
           email: user.email,
         };
