@@ -54,18 +54,19 @@ export default function FAQ() {
 
         <p className="text-2xl mt-4 text-gray-700 text-center max-w-2xl description-font"
          style={{ fontFamily: "var(--font-spartan)" }}>
-          Explore the magical tools that make CVGenie the easiest way to build stunning resumes.
+          No worries - we’ve got answers to all your burning questions (except maybe “what’s for lunch?”)
         </p>
 
         {/* FAQ Accordion */}
-        <div className="mt-12 max-w-3xl w-full space-y-4">
+        <div className="mt-12 max-w-3xl w-full space-y-4"
+          style={{ fontFamily: "var(--font-spartan)" }}>
           {faqs.map((faq, index) => (
             <div
               key={index}
               className="bg-white/70 backdrop-blur-md rounded-xl p-5 shadow-md"
             >
               <button
-                className="w-full flex justify-between items-center text-left text-lg font-semibold text-black"
+                className="w-full flex justify-between items-center text-left text-lg text-black"
                 onClick={() =>
                   setOpenIndex(openIndex === index ? null : index)
                 }
@@ -75,10 +76,11 @@ export default function FAQ() {
                   className={`h-6 w-6 transition-transform duration-300 ${
                     openIndex === index ? "rotate-180" : ""
                   }`}
+                 
                 />
               </button>
               {openIndex === index && (
-                <p className="mt-3 text-gray-700 text-sm">{faq.answer}</p>
+                <p className="mt-3 text-gray-700 text-md">{faq.answer}</p>
               )}
             </div>
           ))}

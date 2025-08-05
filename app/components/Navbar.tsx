@@ -176,57 +176,63 @@ export default function Navbar() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          className="fixed inset-0 bg-black/50 z-40 hidden "
           onClick={closeMobileMenu}
         />
       )}
 
       {/* Mobile Menu */}
-      <div className={`fixed top-0 right-0 h-auto w-64  backdrop-blur-lg m-3 rounded-lg   shadow-2xl z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+      <div className={`fixed top-0 right-0 h-auto w-64  backdrop-blur-lg m-3 mr-4 mt-2 rounded-lg border  border-black/30 shadow-lg   z-50 transform transition-transform duration-300 ease-in-out hidden ${
         isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
       }`}>
         {/* Mobile Menu Header */}
-        <div className="flex justify-between items-center p-4  border-b border-gray-200">
+        <div className="flex justify-between items-center p-4  border-b border-black/30 shadow-lg">
+          <div className="">
           <img 
             src="/cvGenie-logo.png" 
             alt="CVGenie Logo" 
             className="h-8 w-auto object-contain" 
           />
+          </div>
           <button
             onClick={closeMobileMenu}
             className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors duration-200"
             aria-label="Close mobile menu"
           >
+            {/* cross button */}
             <div className="relative w-5 h-5">
-              <div className="absolute w-5 h-0.5 bg-gray-700 rotate-45 top-1/2 left-0 transform -translate-y-1/2"></div>
-              <div className="absolute w-5 h-0.5 bg-gray-700 -rotate-45 top-1/2 left-0 transform -translate-y-1/2"></div>
+              <div className="absolute w-5 h-0.5 bg-black rotate-45 top-1/2 left-0 transform -translate-y-1/2"></div>
+              <div className="absolute w-5 h-0.5 bg-black -rotate-45 top-1/2 left-0 transform -translate-y-1/2"></div>
             </div>
           </button>
         </div>
 
         {/* Mobile Menu Items */}
-        <nav className="py-4">
+        <nav className="py-4 ">
           <Link 
             href="/" 
             onClick={closeMobileMenu}
-            className="block px-6 py-3 text-lg font-medium  hover:text-black hover:bg-gray-50 transition-colors duration-200"
+            className="block px-6 py-3 flex items-center gap-1 text-lg font-medium  rounded hover:text-black hover:bg-white/25 transition-colors duration-200"
           >
+             <img src="/home-heart.png" alt="Home Icon" className="w-4 h-4 mb-0.1 " />
             Home
           </Link>
           <Link 
             href="/create-resume" 
             onClick={closeMobileMenu}
             prefetch={false}
-            className="block px-6 py-3 text-lg font-medium  hover:text-black hover:bg-gray-50 transition-colors duration-200"
+            className="block px-6  py-3 text-lg flex gap-1 items-center font-medium  hover:text-black hover:bg-white/25 rounded transition-colors duration-200"
           >
+            <img src="/edit.png" alt="Create Icon" className="w-4 h-4 " />
             Create Resume
           </Link>
           {!session ? (
             <Link 
               href="/signin"
               onClick={closeMobileMenu}
-              className="block px-6 py-3 text-lg font-medium text-gray-700 hover:text-black hover:bg-gray-50 transition-colors duration-200"
+              className="block px-6 py-3 flex gap-1 items-center text-lg font-medium  hover:text-black hover:bg-gray-50 transition-colors duration-200"
             >
+                <img src="/log-in.png" alt="Sign In Icon" className="w-4 h-4" />
               Sign In
             </Link>
           ) : (
@@ -235,8 +241,9 @@ export default function Navbar() {
     signOut()
     closeMobileMenu()
   }} 
-  className="block w-full text-left px-6 py-3 text-lg font-medium text-gray-700  hover:bg-red-200 text-red-700/60 rounded transition"
+  className="block w-full flex gap-1 items-center text-left px-6 py-3 text-lg font-medium font-semibold text-gray-700  hover:bg-red-200/20 text-red-700/60 rounded transition"
 >
+  <img src="/logout.png" alt="Sign In Icon" className="w-4 h-4 " />
   Sign Out
 </button>
 

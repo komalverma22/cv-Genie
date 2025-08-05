@@ -3,22 +3,22 @@ export default function Features() {
     {
       icon: "/human-resources (3).png", // Replace with your actual image path
       title: "Save Time & Effort",
-      description: "Create a professional resume in under 10 minute,No more struggling with formatting in Word."
+      description: "Create a professional resume in under 10 minute ,no more struggling with formatting in Word."
     },
     {
       icon: "/finger-snap.png",
       title: "Completely Free & Easy",
-      description: "Get smart, structured, and human-readable notes delivered instantly."
+      description: "You don’t have to pay anything. It’s 100% free."
     },
     {
       icon: "/retention.png",
       title: "Stand Out to Employers",
-      description: "Who said what? Who’s doing what? We’ll mark it, assign it, and organize it."
+      description: "Make a strong first impression with a resume that’s clean, clear, and professionally designed.Let your resume do the talking — while you grab the offer."
     },
     {
       icon: "/interview.png",
       title: "Increase Interview Chances",
-      description: "Send notes to your team, Notion, Slack, or inbox with a click. It's worthy of sharing."
+      description: "Create clear, job-ready resumes with CVGenie to impress recruiters and increase your interview chances."
     }
   ];
 

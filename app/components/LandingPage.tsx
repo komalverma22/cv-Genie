@@ -1,24 +1,33 @@
 // import PdfLogo from "../../public/resume-logo.png"
 
 import TextGenerate from "./TextGenerate";
-
+import{ FollowerPointerCard }from "../components/ui/following-pointer"
 export default function LandingPage() {
   return (
     <div className="absolute  left-1/2 -translate-x-1/2 top-40 m-2 w-full">
       
      <div className="text-center px-4 sm:px-8">
-  <h1 className="text-3xl  sm:text-5xl md:text-6xl font-bold leading-tight ">
-    Build Your Perfect RESUMES
-  </h1>
+  <h1
+  className="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight "
+  style={{
+    textShadow: '2px 2px 7px rgba(17, 24, 39, 0.5)', // gray-900 with 50% opacity
+  }}
+>
+  Build Your Perfect RESUMES
+</h1>
+
 
   <div className="flex justify-center items-center  sm:gap-1">
-    <h1 className="text-3xl sm:text-5xl   md:text-6xl font-bold leading-tight">
+    <h1 className="text-3xl sm:text-5xl   md:text-6xl font-bold leading-tight"
+      style={{
+    textShadow: '2px 2px 7px rgba(17, 24, 39, 0.5)', // gray-900 with 50% opacity
+  }}>
       Faster and Smarter
     </h1>
     <img
       src="/resume-logo.png"
       alt="PDF Logo"
-      className="h-12 sm:h-16 md:h-20 object-contain sm:animate-bounce"
+      className="h-12 sm:h-16 md:h-20 object-contain "
     />
   </div>
 
@@ -42,12 +51,13 @@ export default function LandingPage() {
           </button>
           <div className="relative  sm:mt-10"></div>
         </div>
+        {/* <FollowerPointerCard> */}
         <img
           src="/resume-templates.png"
           alt="Resume Preview"
           className="absolute left-1/2 -translate-x-1/2 -bottom-36 md:-bottom-134  w-[80%] md:w-[100%] max-w-[1000px] z-0 drop-shadow-xl mask-image-gradient "
         />
-        
+        {/* </FollowerPointerCard> */}
       </div>
     </div>
   );
