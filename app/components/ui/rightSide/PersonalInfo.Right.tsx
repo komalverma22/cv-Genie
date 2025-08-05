@@ -1,4 +1,13 @@
-export default function PersonalInfoRight({ info }) {
+type InfoType = {
+  name: string;
+  location: string;
+  email: string;
+  github: string;
+  linkedin: string;
+  twitter: string;
+  summary?: string; // if you have a summary field
+};
+export default function PersonalInfoRight({ info }: { info: InfoType }) {
   return (
     <div className=" px-6 pt-4  space-y-4">
       {/* Name & Contact */}
