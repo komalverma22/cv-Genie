@@ -182,9 +182,9 @@ export default function Navbar() {
       )}
 
       {/* Mobile Menu */}
-      <div className={`fixed top-0 right-0 h-auto w-64  backdrop-blur-lg m-3 mr-4 mt-2 rounded-lg border  border-black/30 shadow-lg   z-50 transform transition-transform duration-300 ease-in-out hidden ${
-        isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-      }`}>
+      <div className={`fixed top-0 right-0 h-auto w-64 backdrop-blur-lg m-3 mr-4 mt-2 rounded-lg border border-black/30 shadow-lg z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+  isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+}`}>
         {/* Mobile Menu Header */}
         <div className="flex justify-between items-center p-4  border-b border-black/30 shadow-lg">
           <div className="">

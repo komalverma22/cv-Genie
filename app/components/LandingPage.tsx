@@ -55,7 +55,7 @@ export default function LandingPage() {
         <img
           src="/resume-templates.png"
           alt="Resume Preview"
-          className="absolute left-1/2 -translate-x-1/2 -bottom-36 md:-bottom-134  w-[80%] md:w-[100%] max-w-[1000px] z-0 drop-shadow-xl mask-image-gradient "
+          className="absolute left-1/2 -translate-x-1/2  -bottom-43 md:-bottom-132  w-[80%] md:w-[100%] max-w-[1000px] z-0 drop-shadow-xl mask-image-gradient "
         />
         {/* </FollowerPointerCard> */}
       </div>

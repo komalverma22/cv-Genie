@@ -24,7 +24,7 @@ export default function Home() {
      <LandingPage/>
      
       </div>
-      <div className='absolute left-1/2 -translate-x-1/2 -bottom-86 md:-bottom-145 w-[80%] md:w-[100%] max-w-[1000px] z-0 drop-shadow-xl '>
+      <div className='absolute left-1/2 -translate-x-1/2 -bottom-66 md:-bottom-145 w-[80%] md:w-[100%] max-w-[1000px] z-0 drop-shadow-xl '>
         {/* <img src="/resume-without-bg.png" alt="" className="h-100 bottom-5"/> */}<TextGenerate/>
      
       
