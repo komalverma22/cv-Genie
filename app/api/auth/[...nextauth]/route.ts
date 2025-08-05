@@ -41,7 +41,7 @@ const handler = NextAuth({
   ],
   pages: {
     signIn: '/signin', // Custom sign-in page
-    signUp: '/signup', // Custom sign-up page
+   // Custom sign-up page
     error: '/auth/error', // Error page (optional)
   },
   callbacks: {
@@ -84,10 +84,10 @@ const handler = NextAuth({
       }
       return token;
     },
-    async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id as string;
-      }
+   async session({ session, token }) {
+  if (token && session.user) {
+    (session.user as { id: string }).id = token.id as string;
+  }
       return session;
     },
   },
