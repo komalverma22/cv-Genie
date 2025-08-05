@@ -1,7 +1,11 @@
 "use client";
 
-import { ButtonHTMLAttributes, FC, ReactNode } from "react";
-
+import { ButtonHTMLAttributes, FC, ReactNode ,useState} from "react";
+import { useRouter } from "next/navigation";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import Link from "next/link";
+import { signIn } from "next-auth/react";
+// import { useRouter } from "next/navigation";
 type Variant = "default" | "outline";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -211,7 +215,7 @@ export default function SignInForm() {
         </form>
 
         <p className="text-center text-sm text-black-600 mt-4">
-        Don't have an account?{" "}
+       {"Don't have an account?"}
           <Link href="/signup" className="text-green-800/80 underline hover:text-green-900">
             Sign Up
           </Link>

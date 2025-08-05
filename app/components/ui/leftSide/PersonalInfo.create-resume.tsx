@@ -1,5 +1,24 @@
-export default function PersonalInfo({ info, setInfo }) {
-  const handleChange = (e) => {
+"use client";
+
+import React from "react";
+
+type PersonalInfoType = {
+  name: string;
+  location: string;
+  email: string;
+  github: string;
+  linkedin: string;
+  twitter: string;
+  summary: string; // ← You missed this in your type!
+};
+
+type Props = {
+  info: PersonalInfoType;
+  setInfo: React.Dispatch<React.SetStateAction<PersonalInfoType>>;
+};
+
+export default function PersonalInfo({ info, setInfo }: Props) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
 
@@ -23,7 +42,7 @@ export default function PersonalInfo({ info, setInfo }) {
             <input
               type="text"
               name={field.name}
-              value={info[field.name]}
+              value={info[field.name as keyof PersonalInfoType]}
               onChange={handleChange}
               placeholder={field.placeholder}
               className="w-full border border-gray-300 p-2 rounded"
@@ -33,7 +52,7 @@ export default function PersonalInfo({ info, setInfo }) {
       </div>
 
       {/* Summary Field */}
-      <div className="">
+      <div>
         <label className="block mb-1 font-medium">Summary</label>
         <textarea
           name="summary"

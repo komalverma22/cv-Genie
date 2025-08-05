@@ -5,27 +5,61 @@ import { useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import type { FormEvent } from "react";
+import { AxiosError } from "axios";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { LabelHTMLAttributes } from "react";
+import type { InputHTMLAttributes } from "react";
+// import type { ChangeEvent } from "react";
 
-const Button = ({ children, variant = "default", className = "", type = "button", onClick, disabled = false, ...props }) => {
+type Variant = "default" | "outline";
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
+  variant?: Variant;
+  className?: string;
+}
+interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
+  children: ReactNode;
+  htmlFor: string;
+  className?: string;
+}
+interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
+  id: string;
+}
+interface CardProps {
+  children: ReactNode;
+  className?: string;
+}
+
+const Button = ({
+  children,
+  variant = "default",
+  className = "",
+  type = "button",
+  ...props
+}: ButtonProps) => {
   const baseStyles =
     "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
-  const variants = {
+
+  const variants: Record<Variant, string> = {
     default: "bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4",
     outline: "border border-input hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4",
   };
 
   return (
-    <button 
-      type={type} 
-      className={`${baseStyles} ${variants[variant]} ${className}`} 
-      onClick={onClick} 
-      disabled={disabled}
+    <button
+      type={type}
+      className={`${baseStyles} ${variants[variant]} ${className}`}
       {...props}
     >
       {children}
     </button>
   );
 };
+
+
+
 
 const Input = ({ className = "", type = "text", ...props }) => (
   <input
@@ -35,13 +69,17 @@ const Input = ({ className = "", type = "text", ...props }) => (
   />
 );
 
-const Label = ({ children, htmlFor, className = "" }) => (
-  <label htmlFor={htmlFor} className={`text-sm font-medium ${className}`}>
+const Label = ({ children, htmlFor, className = "", ...props }: LabelProps) => (
+  <label
+    htmlFor={htmlFor}
+    className={`text-sm font-medium ${className}`}
+    {...props}
+  >
     {children}
   </label>
 );
 
-const Checkbox = ({ id, ...props }) => (
+const Checkbox = ({ id, ...props }: CheckboxProps) => (
   <input
     type="checkbox"
     id={id}
@@ -49,8 +87,7 @@ const Checkbox = ({ id, ...props }) => (
     {...props}
   />
 );
-
-const Card = ({ children, className = "" }) => (
+const Card = ({ children, className = "" }: CardProps) => (
   <div className={`rounded-xl shadow-xl p-6 ${className}`}>{children}</div>
 );
 
@@ -89,64 +126,65 @@ export default function SignupForm() {
     }
   };
 
-  const handleCredentialsSignUp = async (e) => {
-    e.preventDefault();
+  const handleCredentialsSignUp = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    if (!name || !email || !password) {
-      alert("Please fill in all fields");
-      return;
+  if (!name || !email || !password) {
+    alert("Please fill in all fields");
+    return;
+  }
+
+  if (!agreedToTerms) {
+    alert("Please agree to the Terms of Use and Privacy Policy");
+    return;
+  }
+
+  if (password.length < 6) {
+    alert("Password should be at least 6 characters long");
+    return;
+  }
+
+  try {
+    setIsLoading(true);
+
+    const response = await axios.post("http://localhost:3000/api/user/signup", {
+      name,
+      email,
+      password,
+    });
+
+    console.log("✅ Signup success:", response.data);
+
+    const signInResult = await signIn("credentials", {
+      username: email,
+      password: password,
+      redirect: false,
+    });
+
+    if (signInResult?.error) {
+      console.error("Auto sign-in error:", signInResult.error);
+      alert("Account created successfully! Please sign in manually.");
+      router.push("/signin");
+    } else {
+      alert("Account created successfully!");
+      router.push("/");
     }
 
-    if (!agreedToTerms) {
-      alert("Please agree to the Terms of Use and Privacy Policy");
-      return;
+  } catch (err: unknown) {
+    const error = err as AxiosError;
+
+    console.error("❌ Signup failed:", error);
+
+    if (error.response?.status === 409) {
+      alert("User already exists with this email");
+    } else {
+      alert("Signup failed. Please try again.");
     }
 
-    if (password.length < 6) {
-      alert("Password should be at least 6 characters long");
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      
-      // First create the user account
-      const response = await axios.post("http://localhost:3000/api/user/signup", {
-        name,
-        email,
-        password,
-      });
-      
-      console.log("✅ Signup success:", response.data);
-      
-      // Then automatically sign them in
-      const signInResult = await signIn("credentials", {
-        username: email,
-        password: password,
-        redirect: false,
-      });
-
-      if (signInResult?.error) {
-        console.error("Auto sign-in error:", signInResult.error);
-        alert("Account created successfully! Please sign in manually.");
-        router.push("/signin");
-      } else {
-        alert("Account created successfully!");
-        router.push("/");
-      }
-      
-    } catch (err) {
-      console.error("❌ Signup failed:", err);
-      
-      if (err.response?.status === 409) {
-        alert("User already exists with this email");
-      } else {
-        alert("Signup failed. Please try again.");
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <div
@@ -194,7 +232,7 @@ export default function SignupForm() {
               placeholder="Enter your name" 
               className="border-gray-600" 
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
               required
             />
           </div>
@@ -209,7 +247,7 @@ export default function SignupForm() {
                 placeholder="you@example.com" 
                 className="pl-10 border-gray-600"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e:React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -225,7 +263,7 @@ export default function SignupForm() {
                 placeholder="••••••••"
                 className="pl-10 pr-10 border-gray-600"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e:React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 required
                 minLength={6}
               />

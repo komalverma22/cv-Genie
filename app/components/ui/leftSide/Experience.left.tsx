@@ -16,13 +16,18 @@ type Props = {
   experience: Experience[]
   setExperience: React.Dispatch<React.SetStateAction<Experience[]>>
 }
+type ExperienceStringKeys = Exclude<keyof Experience, "points">;
 
 export default function ExperienceLeft({ experience, setExperience }: Props) {
-  const handleChange = (index: number, field: keyof Experience, value: string) => {
-    const updated = [...experience]
-    updated[index][field] = value
-    setExperience(updated)
-  }
+ const handleChange = (
+  index: number,
+  field: ExperienceStringKeys,
+  value: string
+) => {
+  const updated = [...experience];
+  updated[index][field] = value;
+  setExperience(updated);
+};
 
   const handlePointChange = (expIndex: number, pointIndex: number, value: string) => {
     const updated = [...experience]
