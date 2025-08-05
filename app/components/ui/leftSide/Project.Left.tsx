@@ -15,11 +15,15 @@ type Props = {
 }
 
 export default function ProjectsLeft({ projects, setProjects }: Props) {
-  const handleChange = (index: number, field: keyof Project, value: string) => {
-    const updated = [...projects]
-    updated[index][field] = value
-    setProjects(updated)
-  }
+ const handleChange = (
+  index: number,
+  field: "title" | "description" | "github", // no "points"
+  value: string
+) => {
+  const updated = [...projects]
+  updated[index][field] = value
+  setProjects(updated)
+}
 
   const handlePointChange = (projIndex: number, pointIndex: number, value: string) => {
     const updated = [...projects]
