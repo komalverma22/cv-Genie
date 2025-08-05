@@ -1,25 +1,44 @@
 "use client";
 
-import { useState } from "react";
-import { Eye, EyeOff, Mail, Lock } from "lucide-react";
-import Link from "next/link";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { ButtonHTMLAttributes, FC, ReactNode } from "react";
 
-// Custom Button Component
-const Button = ({ children, variant = "default", className = "", type = "button", onClick, ...props }: any) => {
+type Variant = "default" | "outline";
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
+  variant?: Variant;
+  className?: string;
+}
+
+const Button: FC<ButtonProps> = ({
+  children,
+  variant = "default",
+  className = "",
+  type = "button",
+  onClick,
+  ...props
+}) => {
   const baseStyles =
     "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
+
   const variants = {
     default: "bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4",
     outline: "border border-input hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4",
   };
 
   return (
-    <button type={type} className={`${baseStyles} ${variants[variant]} ${className}`} onClick={onClick} {...props}>
+    <button
+      type={type}
+      className={`${baseStyles} ${variants[variant]} ${className}`}
+      onClick={onClick}
+      {...props}
+    >
       {children}
     </button>
   );
+
+
+
 };
 
 const Input = ({ className = "", type = "text", ...props }: any) => (
