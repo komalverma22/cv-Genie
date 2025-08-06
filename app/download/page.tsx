@@ -39,74 +39,49 @@ export default function DownloadPage() {
     if (!element) return;
 
     try {
-      // Collect link data BEFORE any style changes
-      const linkData = collectLinkData(element);
-
       // Save original styles
       const originalStyle = element.style.cssText;
       const originalBodyOverflow = document.body.style.overflow;
       
-      // Set element to auto-size based on content
+      // Set auto width and height - let content determine size
       element.style.width = 'auto';
-      element.style.minWidth = '600px';  // Minimum readable width
-      element.style.maxWidth = '900px';  // Maximum width for good formatting
       element.style.height = 'auto';
+      element.style.minWidth = 'auto';  
+      element.style.maxWidth = 'none';
       element.style.overflow = 'visible';
-      element.style.display = 'block';
       document.body.style.overflow = 'visible';
       
-      // Wait for layout to stabilize
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Wait for layout to adjust
+      await new Promise(resolve => setTimeout(resolve, 300));
       
-      // Get final dimensions after auto-sizing
-      const finalWidth = element.scrollWidth;
-      const finalHeight = element.scrollHeight;
-      
-      console.log(`Final dimensions: ${finalWidth}x${finalHeight}`);
+      // Get the natural dimensions after setting auto
+      const elementRect = element.getBoundingClientRect();
+      const naturalWidth = elementRect.width;
+      const naturalHeight = elementRect.height;
 
       const canvas = await html2canvas(element, {
-        scale: 3, // Good balance between quality and file size
+        scale: 2, // Reduced scale for better performance with auto sizing
         backgroundColor: '#ffffff', 
         useCORS: true,
         allowTaint: true,
         scrollX: 0,
         scrollY: 0,
-        width: finalWidth,
-        height: finalHeight,
-        windowWidth: finalWidth + 50,
-        windowHeight: finalHeight + 50,
+        width: naturalWidth,
+        height: naturalHeight,
+        windowWidth: naturalWidth + 100,
+        windowHeight: naturalHeight + 100,
         removeContainer: true,
-        onclone: function(clonedDoc) {
-          // Target the main container div directly
-          const clonedElements = clonedDoc.querySelectorAll('div, section, main, article');
-          clonedElements.forEach((element) => {
-            const htmlElement = element as HTMLElement;
-            if (htmlElement && htmlElement.style) {
-              htmlElement.style.width = 'auto';
-              htmlElement.style.minWidth = '600px';
-              htmlElement.style.maxWidth = '900px';
-              htmlElement.style.height = 'auto';
-              htmlElement.style.overflow = 'visible';
-              htmlElement.style.position = 'relative';
-              htmlElement.style.display = 'block';
-            }
-          });
-        }
       });
 
-      // Restore original styles immediately
+      // Restore original styles
       element.style.cssText = originalStyle;
       document.body.style.overflow = originalBodyOverflow;
 
-      // Create PDF with auto dimensions
+      // PDF creation with auto dimensions
       const canvasWidth = canvas.width;
       const canvasHeight = canvas.height;
-      
-      // Convert canvas pixels to PDF points (72 DPI)
-      const pdfWidth = (canvasWidth * 72) / (96 * 3); // Divide by scale factor
-      const pdfHeight = (canvasHeight * 72) / (96 * 3);
-      
-      console.log(`PDF dimensions: ${pdfWidth}x${pdfHeight} points`);
+      const pdfWidth = Math.round(canvasWidth * 72 / 96);
+      const pdfHeight = Math.round(canvasHeight * 72 / 96);
 
       const pdf = new jsPDF({
         orientation: pdfWidth > pdfHeight ? 'landscape' : 'portrait',
@@ -117,8 +92,8 @@ export default function DownloadPage() {
       const imgData = canvas.toDataURL('image/png', 1.0);
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
 
-      // Add clickable links using collected data
-      addClickableLinks(pdf, linkData, finalWidth, finalHeight, pdfWidth, pdfHeight);
+      // Add clickable links
+      await addClickableLinks(pdf, element, pdfWidth, pdfHeight, naturalWidth, naturalHeight);
 
       pdf.save('resume.pdf');
       
@@ -128,65 +103,31 @@ export default function DownloadPage() {
     }
   };
 
-  // Function to collect link data before DOM changes
-  const collectLinkData = (element: HTMLElement) => {
-    const links = element.querySelectorAll('a[href]') as NodeListOf<HTMLAnchorElement>;
-    const elementRect = element.getBoundingClientRect();
-    
-    return Array.from(links).map(link => {
+  // ✅ Function to add clickable links (mailto, http, etc.)
+  const addClickableLinks = async (pdf, element, pdfWidth, pdfHeight, elementWidth, elementHeight) => {
+    const links = element.querySelectorAll('a[href]');
+    const boundingBox = element.getBoundingClientRect();
+
+    links.forEach(link => {
       const rect = link.getBoundingClientRect();
-      return {
-        href: link.getAttribute('href') || '',
-        x: rect.left - elementRect.left,
-        y: rect.top - elementRect.top,
-        width: rect.width,
-        height: rect.height,
-        text: link.textContent || link.innerText || ''
-      };
+      const href = link.getAttribute('href');
+
+      if (!href) return;
+
+      // Calculate relative position
+      const x = rect.left - boundingBox.left;
+      const y = rect.top - boundingBox.top;
+      const width = rect.width;
+      const height = rect.height;
+
+      // Map to PDF coordinates using actual element dimensions
+      const pdfX = (x / elementWidth) * pdfWidth;
+      const pdfY = (y / elementHeight) * pdfHeight;
+      const pdfW = (width / elementWidth) * pdfWidth;
+      const pdfH = (height / elementHeight) * pdfHeight;
+
+      pdf.link(pdfX, pdfY, pdfW, pdfH, { url: href });
     });
-  };
-
-  // Function to add clickable links to PDF
-  const addClickableLinks = (pdf, linkData, originalWidth, originalHeight, pdfWidth, pdfHeight) => {
-    linkData.forEach(link => {
-      if (!link.href) return;
-
-      // Calculate scale factors
-      const scaleX = pdfWidth / originalWidth;
-      const scaleY = pdfHeight / originalHeight;
-
-      // Convert to PDF coordinates
-      const pdfX = link.x * scaleX;
-      const pdfY = link.y * scaleY;
-      const pdfW = link.width * scaleX;
-      const pdfH = link.height * scaleY;
-
-      // Process different types of links
-      let url = link.href;
-      
-      if (link.href.includes('@') && !link.href.startsWith('mailto:')) {
-        // Email links
-        url = 'mailto:' + link.href;
-      } else if (link.href.includes('linkedin.com') && !link.href.startsWith('http')) {
-        url = 'https://www.' + link.href;
-      } else if (link.href.includes('github.com') && !link.href.startsWith('http')) {
-        url = 'https://www.' + link.href;
-      } else if (link.href.includes('twitter.com') && !link.href.startsWith('http')) {
-        url = 'https://www.' + link.href;
-      } else if (!link.href.startsWith('http://') && !link.href.startsWith('https://') && !link.href.startsWith('mailto:') && !link.href.startsWith('tel:')) {
-        // Add https:// for other links
-        url = 'https://' + link.href;
-      }
-
-      try {
-        pdf.link(pdfX, pdfY, pdfW, pdfH, { url: url });
-        console.log(`✅ Added clickable link: ${url} at (${Math.round(pdfX)}, ${Math.round(pdfY)})`);
-      } catch (error) {
-        console.warn(`❌ Failed to add link ${url}:`, error);
-      }
-    });
-    
-    console.log(`Total clickable links added: ${linkData.length}`);
   };
 
   return (
@@ -194,19 +135,17 @@ export default function DownloadPage() {
       <div
         ref={captureRef}
         style={{
-          width: 'auto',           // Auto width
-          minWidth: '600px',       // Minimum readable width
-          maxWidth: '900px',       // Maximum for good formatting
-          height: 'auto',          // Auto height
-          padding: '30px',         // Good padding for content
+          width: 'auto', // Changed to auto
+          height: 'auto', // Changed to auto
+          padding: '20px',
           border: '1px solid #ccc',
           backgroundColor: '#ffffff',
           color: '#000000',
           fontFamily: 'Arial, sans-serif',
           fontSize: '16px',
-          lineHeight: '1.6',
-          boxSizing: 'border-box',
-          margin: '0 auto',        // Center the content
+          lineHeight: '1.5',
+          maxWidth: '800px', // Optional: set a max-width to prevent it from being too wide
+          minWidth: '600px', // Optional: set a min-width to maintain readability
         }}
       >
         <PersonalInfoRight info={info} />
@@ -220,29 +159,15 @@ export default function DownloadPage() {
       <button
         onClick={handleDownloadPDF}
         style={{
-          padding: '12px 24px',
-          backgroundColor: '#007bff',
+          padding: '10px 20px',
+          backgroundColor: '#000',
           color: '#fff',
           border: 'none',
-          borderRadius: '6px',
+          borderRadius: '4px',
           cursor: 'pointer',
-          fontSize: '16px',
-          fontWeight: '600',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          transition: 'all 0.2s ease',
-        }}
-        onMouseOver={(e) => {
-          const target = e.target as HTMLButtonElement;
-          target.style.backgroundColor = '#0056b3';
-          target.style.transform = 'translateY(-1px)';
-        }}
-        onMouseOut={(e) => {
-          const target = e.target as HTMLButtonElement;
-          target.style.backgroundColor = '#007bff';
-          target.style.transform = 'translateY(0)';
         }}
       >
-        📄 Download as PDF
+        Download as PDF
       </button>
     </main>
   );
