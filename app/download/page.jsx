@@ -77,16 +77,20 @@ export default function DownloadPage() {
         windowHeight: finalHeight + 50,
         removeContainer: true,
         onclone: function(clonedDoc) {
-          const clonedElement = clonedDoc.body.querySelector('*');
-          if (clonedElement) {
-            clonedElement.style.width = 'auto';
-            clonedElement.style.minWidth = '600px';
-            clonedElement.style.maxWidth = '900px';
-            clonedElement.style.height = 'auto';
-            clonedElement.style.overflow = 'visible';
-            clonedElement.style.position = 'relative';
-            clonedElement.style.display = 'block';
-          }
+          // Target the main container div directly
+          const clonedElements = clonedDoc.querySelectorAll('div, section, main, article');
+          clonedElements.forEach((element) => {
+            const htmlElement = element as HTMLElement;
+            if (htmlElement && htmlElement.style) {
+              htmlElement.style.width = 'auto';
+              htmlElement.style.minWidth = '600px';
+              htmlElement.style.maxWidth = '900px';
+              htmlElement.style.height = 'auto';
+              htmlElement.style.overflow = 'visible';
+              htmlElement.style.position = 'relative';
+              htmlElement.style.display = 'block';
+            }
+          });
         }
       });
 
@@ -125,19 +129,19 @@ export default function DownloadPage() {
   };
 
   // Function to collect link data before DOM changes
-  const collectLinkData = (element) => {
-    const links = element.querySelectorAll('a[href]');
+  const collectLinkData = (element: HTMLElement) => {
+    const links = element.querySelectorAll('a[href]') as NodeListOf<HTMLAnchorElement>;
     const elementRect = element.getBoundingClientRect();
     
     return Array.from(links).map(link => {
       const rect = link.getBoundingClientRect();
       return {
-        href: link.getAttribute('href'),
+        href: link.getAttribute('href') || '',
         x: rect.left - elementRect.left,
         y: rect.top - elementRect.top,
         width: rect.width,
         height: rect.height,
-        text: link.textContent || link.innerText
+        text: link.textContent || link.innerText || ''
       };
     });
   };
@@ -228,12 +232,14 @@ export default function DownloadPage() {
           transition: 'all 0.2s ease',
         }}
         onMouseOver={(e) => {
-          e.target.style.backgroundColor = '#0056b3';
-          e.target.style.transform = 'translateY(-1px)';
+          const target = e.target as HTMLButtonElement;
+          target.style.backgroundColor = '#0056b3';
+          target.style.transform = 'translateY(-1px)';
         }}
         onMouseOut={(e) => {
-          e.target.style.backgroundColor = '#007bff';
-          e.target.style.transform = 'translateY(0)';
+          const target = e.target as HTMLButtonElement;
+          target.style.backgroundColor = '#007bff';
+          target.style.transform = 'translateY(0)';
         }}
       >
         📄 Download as PDF
