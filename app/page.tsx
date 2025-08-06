@@ -9,17 +9,18 @@ import FooterThird from './components/Footer';
 export default function Home() {
   return (
     <div className='overflow-x-hidden'>
-    <div className="h-screen w-screen   relative">
-      {/* Background Image - Fixed to viewport */}
-      <Image
-        src={bgImage}
-        alt="Background"
-        fill
-        sizes="100vw"
-        className="bg-cover border-none mask-image-gradient"
-        priority
-        quality={100}
-      />
+ <div className="relative h-screen w-screen overflow-hidden">
+  <Image
+    src={bgImage}
+    alt="Background"
+    fill
+    className="object-cover object-center"
+    priority
+    quality={100}
+  />
+  {/* Your content here */}
+
+
     
      <LandingPage/>
      

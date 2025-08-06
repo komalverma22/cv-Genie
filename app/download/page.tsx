@@ -39,40 +39,47 @@ const handleDownloadPDF = async () => {
   if (!element) return;
 
   try {
+    // Reset styling to natural size before capturing
+    const originalStyle = element.style.cssText;
+    element.style.width = 'auto';
+    element.style.minWidth = 'auto';
+    element.style.maxWidth = 'none';
+
+    await new Promise(resolve => setTimeout(resolve, 100)); // let layout settle
+
     const canvas = await html2canvas(element, {
-      scale: 4,
+      scale: 2,
       backgroundColor: '#ffffff',
       useCORS: true,
-      allowTaint: true,
-      scrollX: 0,
-      scrollY: 0,
-      width: element.scrollWidth,
-      height: element.scrollHeight,
-      // letterRendering: true,
     });
 
-    const canvasWidth = canvas.width;
-    const canvasHeight = canvas.height;
-
-    // Convert canvas size from px to pt (1 px = 0.75 pt)
-    const pdfWidth = canvasWidth * 0.75;
-    const pdfHeight = canvasHeight * 0.75;
-
-    // Use custom page size based on content
-    const pdf = new jsPDF('p', 'pt', [pdfWidth, pdfHeight]);
+    element.style.cssText = originalStyle; // Restore style
 
     const imgData = canvas.toDataURL('image/png', 1.0);
+    const imgWidth = 595.28; // A4 width in pt
+    const pageHeight = 841.89; // A4 height in pt
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    // Add image to PDF (no breaks, full height)
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    const pdf = new jsPDF('p', 'pt', 'a4');
 
-    // Optional: clickable links (if any)
-    await addClickableLinks(pdf, element, pdfWidth, pdfHeight);
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
 
     pdf.save('resume.pdf');
+
   } catch (err) {
     console.error('PDF Download Error:', err);
-    alert("Failed to download PDF.");
+    alert("Failed to download PDF. Please try again.");
   }
 };
 
@@ -109,7 +116,7 @@ const handleDownloadPDF = async () => {
       <div
         ref={captureRef}
         style={{
-          width: '700px',
+          width: 'fit-content',
           padding: '20px',
           border: '1px solid #ccc',
           backgroundColor: '#ffffff',

@@ -10,7 +10,7 @@ export default function LandingPage() {
   <h1
   className="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight "
   style={{
-    textShadow: '2px 2px 7px rgba(17, 24, 39, 0.5)', // gray-900 with 50% opacity
+    textShadow: '0px 0px 10px rgba(17, 24, 39, 0.1)', // gray-900 with 50% opacity
   }}
 >
   Build Your Perfect RESUMES
@@ -20,7 +20,7 @@ export default function LandingPage() {
   <div className="flex justify-center items-center  sm:gap-1">
     <h1 className="text-3xl sm:text-5xl   md:text-6xl font-bold leading-tight"
       style={{
-    textShadow: '2px 2px 7px rgba(17, 24, 39, 0.5)', // gray-900 with 50% opacity
+    textShadow: '0px 0px 10px rgba(17, 24, 39, 0.1)', // gray-900 with 50% opacity
   }}>
       Faster and Smarter
     </h1>
