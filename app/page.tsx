@@ -9,12 +9,12 @@ import FooterThird from './components/Footer';
 export default function Home() {
   return (
     <div className='overflow-x-hidden'>
- <div className="relative h-screen w-screen overflow-hidden">
+ <div className="relative h-screen w-screen ">
   <Image
     src={bgImage}
     alt="Background"
     fill
-    className="object-cover object-center"
+    className="bg-cover border-none mask-image-gradient"
     priority
     quality={100}
   />
