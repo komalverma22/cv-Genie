@@ -25,7 +25,7 @@ export default function ExperienceRight({ experience }: Props) {
           {/* Top Row: Role + Duration */}
           <div className="flex justify-between items-start">
             <p className="font-semibold">
-              {exp.role || "Your Role (e.g. Web Developer Intern)"}
+              {exp.role || "Your Role"}
             </p>
             <p className="italic text-sm">
               {exp.duration || "Duration (e.g. Feb 2025 – Apr 2025)"}

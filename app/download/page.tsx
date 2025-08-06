@@ -34,54 +34,84 @@ export default function DownloadPage() {
     }
   }, []);
 
+
 const handleDownloadPDF = async () => {
   const element = captureRef.current;
   if (!element) return;
 
   try {
-    // Reset styling to natural size before capturing
+    // Save original styles
     const originalStyle = element.style.cssText;
-    element.style.width = 'auto';
-    element.style.minWidth = 'auto';
-    element.style.maxWidth = 'none';
-
-    await new Promise(resolve => setTimeout(resolve, 100)); // let layout settle
+    const originalBodyOverflow = document.body.style.overflow;
+    
+    // Set fixed width using individual properties
+    const targetWidth = 800;
+    element.style.width = targetWidth + 'px';
+    element.style.minWidth = targetWidth + 'px';  
+    element.style.maxWidth = targetWidth + 'px';
+    element.style.overflow = 'visible';
+    document.body.style.overflow = 'visible';
+    
+    // Wait for layout
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    const finalHeight = element.scrollHeight;
 
     const canvas = await html2canvas(element, {
-      scale: 2,
-      backgroundColor: '#ffffff',
+      scale: 3,
+      backgroundColor: '#ffffff', 
       useCORS: true,
+      allowTaint: true,
+      scrollX: 0,
+      scrollY: 0,
+      width: targetWidth,
+      height: finalHeight,
+      windowWidth: targetWidth + 100,
+      windowHeight: finalHeight + 100,
+      removeContainer: true,
+      onclone: function(clonedDoc) {
+        const clonedElement = clonedDoc.body.querySelector('*');
+        if (clonedElement) {
+          clonedElement.style.width = targetWidth + 'px';
+          clonedElement.style.minWidth = targetWidth + 'px';
+          clonedElement.style.maxWidth = targetWidth + 'px';
+          clonedElement.style.overflow = 'visible';
+          clonedElement.style.position = 'relative';
+        }
+      }
     });
 
-    element.style.cssText = originalStyle; // Restore style
+    // Restore styles
+    element.style.cssText = originalStyle;
+    document.body.style.overflow = originalBodyOverflow;
+
+    // PDF creation
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+    const pdfWidth = Math.round(canvasWidth * 72 / 96);
+    const pdfHeight = Math.round(canvasHeight * 72 / 96);
+
+    const pdf = new jsPDF({
+      orientation: pdfWidth > pdfHeight ? 'landscape' : 'portrait',
+      unit: 'pt', 
+      format: [pdfWidth, pdfHeight]
+    });
 
     const imgData = canvas.toDataURL('image/png', 1.0);
-    const imgWidth = 595.28; // A4 width in pt
-    const pageHeight = 841.89; // A4 height in pt
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
 
-    const pdf = new jsPDF('p', 'pt', 'a4');
-
-    let heightLeft = imgHeight;
-    let position = 0;
-
-    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
-
-    while (heightLeft > 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+    if (typeof addClickableLinks === 'function') {
+      await addClickableLinks(pdf, element, pdfWidth, pdfHeight);
     }
 
     pdf.save('resume.pdf');
-
+    
   } catch (err) {
     console.error('PDF Download Error:', err);
-    alert("Failed to download PDF. Please try again.");
+    alert('Failed to download PDF. Please try again.');
   }
 };
+
 
 
   // ✅ Function to add links (mailto, http, etc.)
@@ -116,7 +146,7 @@ const handleDownloadPDF = async () => {
       <div
         ref={captureRef}
         style={{
-          width: 'fit-content',
+          width: '700px',
           padding: '20px',
           border: '1px solid #ccc',
           backgroundColor: '#ffffff',
