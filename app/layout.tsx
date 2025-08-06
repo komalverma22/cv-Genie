@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, League_Spartan } from "next/font/google";
 import "./globals.css";
+import { Quicksand } from "next/font/google";
 import Navbar from "./components/Navbar";
 import { Providers } from "./provider";
 
@@ -23,6 +24,12 @@ const leagueSpartan = League_Spartan({
   display: "swap",
 });
 
+const quicksand = Quicksand({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"], // choose what you want
+  variable: "--font-quicksand", // optional if using Tailwind's custom font
+});
+
 export const metadata: Metadata = {
   title: "CVGenie",
   description: "Create stunning resumes in minutes!",
@@ -36,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${leagueSpartan.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${leagueSpartan.variable} ${quicksand.variable}`}
     >
       <body className="antialiased">
         <Providers>

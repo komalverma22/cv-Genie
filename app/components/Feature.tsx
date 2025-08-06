@@ -38,7 +38,9 @@ export default function Features() {
             alt="sparkle"
             className="ww-6 sm:w-8 h-6 sm:h-8 object-contain animate-sparkle text-extrabold"
           />
-          <h2 className="text-4xl sm:text-6xl font-bold text-black drop-shadow-md">
+          <h2 className="text-3xl sm:text-6xl font-bold text-black drop-shadow-md" style={{
+            //  fontFamily: "var(--font-quicksand)" 
+          }}>
             Our Features
           </h2>
           <img
@@ -48,7 +50,7 @@ export default function Features() {
           />
         </div>
 
-        <p className="text-2xl mt-4 text-gray-700 text-center max-w-2xl"
+        <p className="text-xl mt-4 text-gray-700 text-center max-w-2xl"
          style={{ fontFamily: "var(--font-spartan)" }}>
           Explore the magical tools that make CVGenie the easiest way to build stunning resumes.
         </p>

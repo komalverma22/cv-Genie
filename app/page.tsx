@@ -14,7 +14,15 @@ export default function Home() {
     src={bgImage}
     alt="Background"
     fill
-    className="bg-cover border-none mask-image-gradient"
+    className="hidden sm:block bg-cover border-none mask-image-gradient"
+    priority
+    quality={100}
+  />
+   <Image
+    src="/landing_bg_phone.png"
+    alt="Background Mobile"
+    fill
+    className="block sm:hidden object-cover object-center mask-image-gradient"
     priority
     quality={100}
   />

@@ -42,7 +42,7 @@ export default function FAQ() {
             alt="sparkle"
             className="w-6 sm:w-8 h-6 sm:h-8 object-contain animate-sparkle text-extrabold"
           />
-          <h2 className=" text-4xl sm:text-6xl font-bold text-black drop-shadow-md">
+          <h2 className=" text-3xl sm:text-6xl font-bold text-black drop-shadow-md">
             Still Confused?
           </h2>
           <img
@@ -52,7 +52,7 @@ export default function FAQ() {
           />
         </div>
 
-        <p className="text-2xl mt-4 text-gray-700 text-center max-w-2xl description-font"
+        <p className="text-xl mt-4 text-gray-700 text-center max-w-2xl description-font"
          style={{ fontFamily: "var(--font-spartan)" }}>
           No worries - we’ve got answers to all your burning questions (except maybe “what’s for lunch?”)
         </p>
@@ -87,13 +87,13 @@ export default function FAQ() {
         </div>
         {/* Get Help Button */}
 <div className="mt-10 flex justify-center">
-  <button className="flex animated-hover-btn items-center gap-1 text-black/80 px-6 py-2 rounded-sm shadow-md hover:shadow-xl transition-all duration-300 font-semibold text-lg hover:scale-105 bg-white/70 backdrop-blur-md bubbles-effect relative">
+  <button className="flex animated-hover-btn items-center gap-1 text-black/80 px-6 py-2 rounded-sm shadow-md hover:shadow-xl transition-all duration-300 font-semibold text-lg hover:scale-105 bg-white/70 backdrop-blur-md bubbles-effect relative title-font">
     <img
       src="/problem-solving.png"
       alt="Problem Solving"
       className="w-6 h-6 object-contain"
     />
-    <div className="hover-left absolute w-full h-full top-0 right-2/3"></div>
+    <div className="hover-left absolute w-full h-full top-0 right-2/3 "></div>
     Get Help
     <div className="hover-right absolute w-full h-full top-0 left-2/3"></div>
           <div className="bubbles-effect absolute inset-0 opacity-60 pointer-events-none"></div>

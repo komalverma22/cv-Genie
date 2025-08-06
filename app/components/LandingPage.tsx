@@ -7,27 +7,32 @@ export default function LandingPage() {
     <div className="absolute  left-1/2 -translate-x-1/2 top-40 m-2 w-full">
       
      <div className="text-center px-4 sm:px-8">
-  <h1
-  className="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight "
+ <h1
+  className={"text-2xl sm:text-5xl md:text-6xl font-extrabold leading-tight"}
   style={{
-    textShadow: '0px 0px 10px rgba(17, 24, 39, 0.1)', // gray-900 with 50% opacity
+    textShadow: '1px 1px 5px rgba(17, 24, 39, 0.3)',
+     fontFamily: "var(--font-quicksand)" 
   }}
 >
-  Build Your Perfect RESUMES
+  {/* Build Your Perfect RESUMES */}
+  BUILD YOUR PERFECT RESUMES
+
 </h1>
 
 
-  <div className="flex justify-center items-center  sm:gap-1">
-    <h1 className="text-3xl sm:text-5xl   md:text-6xl font-bold leading-tight"
+
+  <div className="flex justify-center items-center gap-0 sm:gap-1">
+    <h1 className="text-2xl sm:text-5xl   md:text-6xl font-bold leading-tight"
       style={{
-    textShadow: '0px 0px 10px rgba(17, 24, 39, 0.1)', // gray-900 with 50% opacity
+    textShadow: '1px 1px 5px rgba(17, 24, 39, 0.3)', // gray-900 with 50% opacity
+    fontFamily: "var(--font-quicksand)"
   }}>
-      Faster and Smarter
+      FASTER AND SMARTER
     </h1>
     <img
       src="/resume-logo.png"
       alt="PDF Logo"
-      className="h-12 sm:h-16 md:h-20 object-contain "
+      className="h-12 sm:h-16 md:h-20 object-contain hidden sm:block "
     />
   </div>
 
@@ -41,7 +46,7 @@ export default function LandingPage() {
           dream job - and it is Free to download
         </p>
         <div className="flex justify-center items-center">
-          <button className="border animated-hover-btn transition-all duration-300 border-black/30 px-2 sm:px-4 py-1.5 sm:py-2.5 my-3 text-sm sm:text-xl bubbles-effect relative font-semibold bg-green-400/30 flex items-center gap-2 rounded-sm hover:scale-105 hover:bg-green-600/50">
+          <button className="border animated-hover-btn transition-all duration-300 border-black/30 px-2 sm:px-4 py-1.5 sm:py-2.5 my-3 text-sm sm:text-xl bubbles-effect relative font-semibold bg-green-400/30 flex items-center gap-2 rounded-sm hover:scale-105 hover:bg-green-600/50 title-font">
             <a href="/create-resume">Create Your Resume</a>
             <img
               src="/sparkle.png"
