@@ -147,7 +147,8 @@ export default function SignupForm() {
   try {
     setIsLoading(true);
 
-    const response = await axios.post("http://localhost:3000/api/user/signup", {
+    const apiUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const response = await axios.post(`${apiUrl}/api/user/signup`, {
       name,
       email,
       password,
