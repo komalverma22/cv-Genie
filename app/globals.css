@@ -11,7 +11,7 @@
   --foreground: #000000;
   /* --border:gray; */
    --border: 1.5px solid #aaaeb8ef;
-   --link-color: rgb(8, 8, 137);
+   --link-color: rgba(2, 2, 95, 0.655);
 }
 
 @theme inline {
