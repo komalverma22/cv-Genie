@@ -28,36 +28,25 @@ export default function PersonalInfoRight({ info }: { info: InfoType }) {
     }
   ].filter(Boolean);
 
-  // Create contact info array, filtering out empty values
-  const contactInfo = [
-    info.location && info.location.trim(),
-    info.email && info.email.trim()
-  ].filter(Boolean);
-
   return (
     <div className="px-6 pt-4 space-y-4">
       {/* Name & Contact */}
       <div className="text-center">
         <h1 className="text-3xl font-bold uppercase mb-2">{info.name || "Your Name"}</h1>
         
-        {/* Only show contact info if at least one field exists */}
-        {contactInfo.length > 0 && (
-          <p className="text-sm flex justify-center gap-1 flex-wrap">
-            {info.location && <span>{info.location}</span>}
-            {info.location && info.email && <span> | </span>}
-            {info.email && (
-              <a
-                href={`mailto:${info.email}`}
-                style={{
-                  color: "var(--link-color)",
-                  fontWeight: "500",
-                }}
-              >
-                {info.email}
-              </a>
-            )}
-          </p>
-        )}
+        <p className="text-sm flex justify-center gap-1 flex-wrap">
+          <span>{info.location || "Your Location"}</span>
+          <span> | </span>
+          <a
+            href={`mailto:${info.email || "youremail@example.com"}`}
+            style={{
+              color: "var(--link-color)",
+              fontWeight: "500",
+            }}
+          >
+            {info.email || "youremail@example.com"}
+          </a>
+        </p>
 
         {/* Social Links - Only show if they exist */}
         {socialLinks.length > 0 && (
