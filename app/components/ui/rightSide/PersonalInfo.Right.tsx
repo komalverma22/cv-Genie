@@ -9,7 +9,7 @@ type InfoType = {
 };
 
 export default function PersonalInfoRight({ info }: { info: InfoType }) {
-  // Filter out empty social media fields
+  // Filter out empty social media fields - completely remove if empty
   const socialLinks = [
     info.linkedin && {
       label: "LinkedIn",
@@ -28,23 +28,36 @@ export default function PersonalInfoRight({ info }: { info: InfoType }) {
     }
   ].filter(Boolean);
 
+  // Create contact info array, filtering out empty values
+  const contactInfo = [
+    info.location && info.location.trim(),
+    info.email && info.email.trim()
+  ].filter(Boolean);
+
   return (
     <div className="px-6 pt-4 space-y-4">
       {/* Name & Contact */}
       <div className="text-center">
         <h1 className="text-3xl font-bold uppercase mb-2">{info.name || "Your Name"}</h1>
-        <p className="text-sm flex justify-center gap-1">
-          {info.location || "Your Location"} |{" "}
-          <a
-            href={`mailto:${info.email}`}
-            style={{
-              color: "var(--link-color)",
-              fontWeight: "500",
-            }}
-          >
-            {info.email || "youremail@example.com"}
-          </a>
-        </p>
+        
+        {/* Only show contact info if at least one field exists */}
+        {contactInfo.length > 0 && (
+          <p className="text-sm flex justify-center gap-1 flex-wrap">
+            {info.location && <span>{info.location}</span>}
+            {info.location && info.email && <span> | </span>}
+            {info.email && (
+              <a
+                href={`mailto:${info.email}`}
+                style={{
+                  color: "var(--link-color)",
+                  fontWeight: "500",
+                }}
+              >
+                {info.email}
+              </a>
+            )}
+          </p>
+        )}
 
         {/* Social Links - Only show if they exist */}
         {socialLinks.length > 0 && (
@@ -69,18 +82,20 @@ export default function PersonalInfoRight({ info }: { info: InfoType }) {
         )}
       </div>
 
-      {/* Summary */}
-      <div className="my-1">
-        <h2 
-          className="font-semibold border-b pb-2 mb-1 text-base leading-relaxed"
-          style={{ borderBottom: "var(--border)" }}
-        >
-          SUMMARY
-        </h2>
-        <p className="text-sm">
-          {info.summary || "Tell us about Yourself..."}
-        </p>
-      </div>
+      {/* Summary - Only show if it exists */}
+      {info.summary && info.summary.trim() && (
+        <div className="my-1">
+          <h2 
+            className="font-semibold border-b pb-2 mb-1 text-base leading-relaxed"
+            style={{ borderBottom: "var(--border)" }}
+          >
+            SUMMARY
+          </h2>
+          <p className="text-sm">
+            {info.summary}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
