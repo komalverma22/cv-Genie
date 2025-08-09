@@ -71,20 +71,18 @@ export default function PersonalInfoRight({ info }: { info: InfoType }) {
         )}
       </div>
 
-      {/* Summary - Only show if it exists */}
-      {info.summary && info.summary.trim() && (
-        <div className="my-1">
-          <h2 
-            className="font-semibold border-b pb-2 mb-1 text-base leading-relaxed"
-            style={{ borderBottom: "var(--border)" }}
-          >
-            SUMMARY
-          </h2>
-          <p className="text-sm">
-            {info.summary}
-          </p>
-        </div>
-      )}
+      {/* Summary - Always show */}
+      <div className="my-1">
+        <h2 
+          className="font-semibold border-b pb-2 mb-1 text-base leading-relaxed"
+          style={{ borderBottom: "var(--border)" }}
+        >
+          SUMMARY
+        </h2>
+        <p className="text-sm">
+          {info.summary || "Tell us about Yourself..."}
+        </p>
+      </div>
     </div>
   );
 }
