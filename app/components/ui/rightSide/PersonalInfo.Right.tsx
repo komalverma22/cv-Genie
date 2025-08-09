@@ -5,94 +5,80 @@ type InfoType = {
   github: string;
   linkedin: string;
   twitter: string;
-  summary?: string; // if you have a summary field
+  summary?: string;
 };
+
 export default function PersonalInfoRight({ info }: { info: InfoType }) {
+  // Filter out empty social media fields
+  const socialLinks = [
+    info.linkedin && {
+      label: "LinkedIn",
+      url: `https://linkedin.com/in/${info.linkedin}`,
+      display: `linkedin.com/in/${info.linkedin}`
+    },
+    info.github && {
+      label: "GitHub", 
+      url: `https://github.com/${info.github}`,
+      display: `github.com/${info.github}`
+    },
+    info.twitter && {
+      label: "Twitter",
+      url: `https://twitter.com/${info.twitter}`, 
+      display: `twitter.com/${info.twitter}`
+    }
+  ].filter(Boolean);
+
   return (
-    <div className=" px-6 pt-4  space-y-4">
+    <div className="px-6 pt-4 space-y-4">
       {/* Name & Contact */}
       <div className="text-center">
         <h1 className="text-3xl font-bold uppercase mb-2">{info.name || "Your Name"}</h1>
-        <p className=" text-sm flex justify-center gap-1">
-          
-            {info.location || "Your Location"}  {" "} |
-            
-         <a
-  href={`mailto:${info.email}`}
-  style={{
-    color: "var(--link-color)", // DodgerBlue shade (pretty and soft)
-    // textDecoration: "underline",
-    fontWeight: "500",
-    // padding:"2px"
-  }}
->
-  {info.email || "youremail@example.com"}
-</a>
-
+        <p className="text-sm flex justify-center gap-1">
+          {info.location || "Your Location"} |{" "}
+          <a
+            href={`mailto:${info.email}`}
+            style={{
+              color: "var(--link-color)",
+              fontWeight: "500",
+            }}
+          >
+            {info.email || "youremail@example.com"}
+          </a>
         </p>
 
-        {/* Social Links */}
-        <div className="flex justify-center gap-1 text-sm mt-0 flex-wrap">
-         <div>
-  
- <div>
-  {/* <strong>LinkedIn:</strong>{" "} */}
-  <a
-    href={`https://linkedin.com/in/${info.linkedin || "username"}`}
-    className=" "
-              style={{
-    color: "var(--link-color)", // DodgerBlue shade (pretty and soft)
-    // textDecoration: "underline",
-    fontWeight: "500",
-    //  textUnderlineOffset: "4px"
-    // padding:"2px"
-  }}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    linkedin.com/in/{info.linkedin || "username"} |</a>
-</div>
-</div>
-            <a
-              href={`https://github.com/${info.github || "username"}`}
-             
-               style={{
-    color: "var(--link-color)", // DodgerBlue shade (pretty and soft)
-    // textDecoration: "underline",
-    fontWeight: "500",
-    //  textUnderlineOffset: "4px"
-    // padding:"2px"
-  }}
-              target="_blank"
-              rel="noopener noreferrer"
-            >github.com/{info.github|| "username"} |
-            </a>
-        
-         
-            <a
-              href={`https://twitter.com/${info.twitter || "username"}`}
-              className=" "
-               style={{
-    color: "var(--link-color)", // DodgerBlue shade (pretty and soft)
-    // textDecoration: "underline",
-    fontWeight: "500",
-    // padding:"2px"
-  }}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              twitter.com/{info.twitter||"username"}
-            </a>
-        
-        </div>
+        {/* Social Links - Only show if they exist */}
+        {socialLinks.length > 0 && (
+          <div className="flex justify-center gap-1 text-sm mt-0 flex-wrap">
+            {socialLinks.map((link, index) => (
+              <span key={link.label}>
+                <a
+                  href={link.url}
+                  style={{
+                    color: "var(--link-color)",
+                    fontWeight: "500",
+                  }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {link.display}
+                </a>
+                {index < socialLinks.length - 1 && " | "}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Summary */}
-      <div className=" my-1">
-          <h2 className="font-semibold border-b var[--border] pb-2 mb-1 text-base leading-relaxed
-"  style={{ borderBottom: "var(--border)" }}>SUMMARY</h2>
+      <div className="my-1">
+        <h2 
+          className="font-semibold border-b pb-2 mb-1 text-base leading-relaxed"
+          style={{ borderBottom: "var(--border)" }}
+        >
+          SUMMARY
+        </h2>
         <p className="text-sm">
-         {info.summary || "Tell us about Yourself..."} {" "}
+          {info.summary || "Tell us about Yourself..."}
         </p>
       </div>
     </div>
