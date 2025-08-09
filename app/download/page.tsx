@@ -137,15 +137,15 @@ export default function DownloadPage() {
         style={{
           width: 'auto', // Changed to auto
           height: 'auto', // Changed to auto
-          padding: '20px',
+          padding: '20px 10px',
           border: '1px solid #ccc',
           backgroundColor: '#ffffff',
           color: '#000000',
           fontFamily: 'Arial, sans-serif',
-          fontSize: '16px',
+          fontSize: '13px',
           lineHeight: '1.5',
-          maxWidth: '800px', // Optional: set a max-width to prevent it from being too wide
-          minWidth: '600px', // Optional: set a min-width to maintain readability
+          maxWidth: '900px', // Optional: set a max-width to prevent it from being too wide
+          minWidth: '700px', // Optional: set a min-width to maintain readability
         }}
       >
         <PersonalInfoRight info={info} />
