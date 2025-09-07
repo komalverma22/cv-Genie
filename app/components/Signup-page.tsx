@@ -10,7 +10,6 @@ import { AxiosError } from "axios";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import type { LabelHTMLAttributes } from "react";
 import type { InputHTMLAttributes } from "react";
-// import type { ChangeEvent } from "react";
 
 type Variant = "default" | "outline";
 
@@ -58,9 +57,6 @@ const Button = ({
   );
 };
 
-
-
-
 const Input = ({ className = "", type = "text", ...props }) => (
   <input
     type={type}
@@ -87,6 +83,7 @@ const Checkbox = ({ id, ...props }: CheckboxProps) => (
     {...props}
   />
 );
+
 const Card = ({ children, className = "" }: CardProps) => (
   <div className={`rounded-xl shadow-xl p-6 ${className}`}>{children}</div>
 );
@@ -108,7 +105,7 @@ export default function SignupForm() {
     try {
       setIsLoading(true);
       const result = await signIn("google", {
-        callbackUrl: "/", // Redirect URL after successful signup
+        callbackUrl: "/",
         redirect: false,
       });
       
@@ -127,65 +124,103 @@ export default function SignupForm() {
   };
 
   const handleCredentialsSignUp = async (e: FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!name || !email || !password) {
-    alert("Please fill in all fields");
-    return;
-  }
-
-  if (!agreedToTerms) {
-    alert("Please agree to the Terms of Use and Privacy Policy");
-    return;
-  }
-
-  if (password.length < 6) {
-    alert("Password should be at least 6 characters long");
-    return;
-  }
-
-  try {
-    setIsLoading(true);
-
-    const apiUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-    const response = await axios.post(`${apiUrl}/api/user/signup`, {
-      name,
-      email,
-      password,
-    });
-
-    console.log("✅ Signup success:", response.data);
-
-    const signInResult = await signIn("credentials", {
-      username: email,
-      password: password,
-      redirect: false,
-    });
-
-    if (signInResult?.error) {
-      console.error("Auto sign-in error:", signInResult.error);
-      alert("Account created successfully! Please sign in manually.");
-      router.push("/signin");
-    } else {
-      alert("Account created successfully!");
-      router.push("/");
+    if (!name || !email || !password) {
+      alert("Please fill in all fields");
+      return;
     }
 
-  } catch (err: unknown) {
-    const error = err as AxiosError;
-
-    console.error("❌ Signup failed:", error);
-
-    if (error.response?.status === 409) {
-      alert("User already exists with this email");
-    } else {
-      alert("Signup failed. Please try again.");
+    if (!agreedToTerms) {
+      alert("Please agree to the Terms of Use and Privacy Policy");
+      return;
     }
 
-  } finally {
-    setIsLoading(false);
-  }
-};
+    if (password.length < 6) {
+      alert("Password should be at least 6 characters long");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      
+      console.log("🚀 Attempting signup...");
+      
+      // First, test if API endpoint exists
+      try {
+        const testResponse = await fetch('/api/user/signup');
+        console.log("API test response:", testResponse.status);
+        if (!testResponse.ok && testResponse.status !== 405) {
+          throw new Error(`API endpoint not available: ${testResponse.status}`);
+        }
+      } catch (testError) {
+        console.error("API endpoint not reachable:", testError);
+        alert("Server error: API endpoint not available. Please make sure the /api/user/signup route is created.");
+        return;
+      }
+
+      // Use relative URL instead of full URL
+      const response = await axios.post('/api/user/signup', {
+        name,
+        email,
+        password,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        timeout: 15000, // 15 second timeout
+      });
+
+      console.log("✅ Signup success:", response.data);
+
+      // Auto sign-in after successful signup
+      const signInResult = await signIn("credentials", {
+        username: email,
+        password: password,
+        redirect: false,
+      });
+
+      if (signInResult?.error) {
+        console.error("Auto sign-in error:", signInResult.error);
+        alert("Account created successfully! Please sign in manually.");
+        router.push("/signin");
+      } else {
+        alert("Account created successfully!");
+        router.push("/");
+      }
+
+    } catch (err: unknown) {
+      const error = err as AxiosError;
+      
+      console.error("❌ Signup failed:", error);
+      console.error("Error details:", {
+        message: error.message,
+        code: error.code,
+        status: error.response?.status,
+        data: error.response?.data
+      });
+      
+      if (error.code === 'ERR_NETWORK') {
+        alert("Network error: Cannot connect to server. Please ensure the API route '/api/user/signup' exists and try again.");
+      } else if (error.code === 'ECONNABORTED') {
+        alert("Request timeout. Please check your connection and try again.");
+      } else if (error.response?.status === 409) {
+        alert("User already exists with this email");
+      } else if (error.response?.status === 400) {
+        const errorData = error.response.data as { error: string };
+        alert(errorData.error || "Invalid input data");
+      } else if (error.response?.status === 404) {
+        alert("API endpoint not found. Please ensure '/api/user/signup' route is created.");
+      } else if (error.response?.status === 500) {
+        alert("Server error. Please check server logs and database connection.");
+      } else {
+        alert(`Signup failed: ${error.message || 'Unknown error'}. Please check console for details.`);
+      }
+
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div
@@ -286,7 +321,6 @@ export default function SignupForm() {
               onChange={(e) => setAgreedToTerms(e.target.checked)}
               required
               className="accent-green-600  focus:ring-green-400"
-
             />
             <label htmlFor="terms" className="text-sm text-gray-600">
               I agree to the <Link href="/terms" className="text-green-800/80 hover:text-green-900 hover:underline">Terms of Use</Link> and <Link href="/privacy" className="text-green-800/80 hover:text-green-900 hover:underline ">Privacy Policy</Link>
