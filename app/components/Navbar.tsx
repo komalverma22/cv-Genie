@@ -171,7 +171,7 @@ export default function Navbar() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          className="fixed inset-0 z-40 md:hidden"
           onClick={closeMobileMenu}
         />
       )}
